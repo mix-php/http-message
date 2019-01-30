@@ -6,7 +6,7 @@ namespace Mix\Http\Message\Compatible;
  * Request组件
  * @author LIUJIAN <coder.keda@gmail.com>
  */
-class Request extends \Mix\Http\BaseRequest
+class Request extends \Mix\Http\Message\Base\Request
 {
 
     // 初始化事件

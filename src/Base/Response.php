@@ -22,17 +22,17 @@ class Response extends Component
     public $defaultFormat = self::FORMAT_HTML;
 
     /**
-     * @var \Mix\Http\Json
+     * @var \Mix\Http\Message\Json
      */
     public $json;
 
     /**
-     * @var \Mix\Http\Jsonp
+     * @var \Mix\Http\Message\Jsonp
      */
     public $jsonp;
 
     /**
-     * @var \Mix\Http\Xml
+     * @var \Mix\Http\Message\Xml
      */
     public $xml;
 

@@ -6,7 +6,7 @@ namespace Mix\Http\Message\Compatible;
  * Response组件
  * @author LIUJIAN <coder.keda@gmail.com>
  */
-class Response extends \Mix\Http\BaseResponse
+class Response extends \Mix\Http\Message\Base\Response
 {
 
     // 初始化事件
