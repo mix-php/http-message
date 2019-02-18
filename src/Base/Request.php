@@ -2,7 +2,7 @@
 
 namespace Mix\Http\Message\Base;
 
-use Mix\Core\Component;
+use Mix\Core\Component\Component;
 
 /**
  * Request组件基类

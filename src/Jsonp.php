@@ -2,7 +2,7 @@
 
 namespace Mix\Http\Message;
 
-use Mix\Core\BeanObject;
+use Mix\Core\Bean\BeanObject;
 use Mix\Helpers\JsonHelper;
 
 /**
