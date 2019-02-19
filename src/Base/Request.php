@@ -2,13 +2,13 @@
 
 namespace Mix\Http\Message\Base;
 
-use Mix\Core\Component\Component;
+use Mix\Core\Component\AbstractComponent;
 
 /**
  * Request组件基类
  * @author LIUJIAN <coder.keda@gmail.com>
  */
-class Request extends Component
+class Request extends AbstractComponent
 {
 
     // ROUTE 参数

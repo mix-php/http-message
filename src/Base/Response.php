@@ -2,13 +2,13 @@
 
 namespace Mix\Http\Message\Base;
 
-use Mix\Core\Component\Component;
+use Mix\Core\Component\AbstractComponent;
 
 /**
  * Response组件基类
  * @author LIUJIAN <coder.keda@gmail.com>
  */
-class Response extends Component
+class Response extends AbstractComponent
 {
 
     // 格式值

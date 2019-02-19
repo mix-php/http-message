@@ -2,14 +2,14 @@
 
 namespace Mix\Http\Message;
 
-use Mix\Core\Bean\BeanObject;
+use Mix\Core\Bean\AbstractObject;
 use Mix\Helpers\JsonHelper;
 
 /**
  * JSONP 类
  * @author LIUJIAN <coder.keda@gmail.com>
  */
-class Jsonp extends BeanObject
+class Jsonp extends AbstractObject
 {
 
     // callback键名

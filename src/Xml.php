@@ -2,14 +2,14 @@
 
 namespace Mix\Http\Message;
 
-use Mix\Core\Bean\BeanObject;
+use Mix\Core\Bean\AbstractObject;
 use Mix\Helpers\XmlHelper;
 
 /**
  * Xml类
  * @author LIUJIAN <coder.keda@gmail.com>
  */
-class Xml extends BeanObject
+class Xml extends AbstractObject
 {
 
     // 编码
