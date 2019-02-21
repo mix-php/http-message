@@ -19,7 +19,7 @@ class Response extends AbstractComponent
     const FORMAT_RAW = 'raw';
 
     // 默认输出格式
-    public $defaultFormat = self::FORMAT_HTML;
+    public $defaultFormat;
 
     /**
      * @var \Mix\Http\Message\Json
