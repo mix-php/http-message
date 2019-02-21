@@ -16,7 +16,7 @@ class Response extends \Mix\Http\Message\Base\Response
     protected $_responder;
 
     // 针对每个请求执行初始化
-    public function initializeRequest($responder)
+    public function beforeInitialize($responder)
     {
         // 设置响应者
         $this->_responder = $responder;

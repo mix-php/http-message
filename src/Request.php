@@ -16,7 +16,7 @@ class Request extends \Mix\Http\Message\Base\Request
     protected $_requester;
 
     // 针对每个请求执行初始化
-    public function initializeRequest($requester)
+    public function beforeInitialize($requester)
     {
         // 设置请求者
         $this->_requester = $requester;
