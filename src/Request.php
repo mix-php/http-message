@@ -15,11 +15,14 @@ class Request extends \Mix\Http\Message\Base\Request
      */
     protected $_requester;
 
-    // 针对每个请求执行初始化
-    public function beforeInitialize($requester)
+    /**
+     * 针对每个请求执行初始化
+     * @param \Swoole\Http\Request $request
+     */
+    public function beforeInitialize(\Swoole\Http\Request $request)
     {
         // 设置请求者
-        $this->_requester = $requester;
+        $this->_requester = $request;
         // 执行初始化
         $this->setRoute([]);
         $this->_get    = isset($requester->get) ? $requester->get : [];
@@ -30,7 +33,10 @@ class Request extends \Mix\Http\Message\Base\Request
         $this->_header = isset($requester->header) ? $requester->header : [];
     }
 
-    // 返回原始的HTTP包体
+    /**
+     * 返回原始的HTTP包体
+     * @return string
+     */
     public function getRawBody()
     {
         return $this->_requester->rawContent();
