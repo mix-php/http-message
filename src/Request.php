@@ -25,12 +25,12 @@ class Request extends \Mix\Http\Message\Base\Request
         $this->_requester = $request;
         // 执行初始化
         $this->setRoute([]);
-        $this->_get    = isset($requester->get) ? $requester->get : [];
-        $this->_post   = isset($requester->post) ? $requester->post : [];
-        $this->_files  = isset($requester->files) ? $requester->files : [];
-        $this->_cookie = isset($requester->cookie) ? $requester->cookie : [];
-        $this->_server = isset($requester->server) ? $requester->server : [];
-        $this->_header = isset($requester->header) ? $requester->header : [];
+        $this->_get    = isset($request->get) ? $request->get : [];
+        $this->_post   = isset($request->post) ? $request->post : [];
+        $this->_files  = isset($request->files) ? $request->files : [];
+        $this->_cookie = isset($request->cookie) ? $request->cookie : [];
+        $this->_server = isset($request->server) ? $request->server : [];
+        $this->_header = isset($request->header) ? $request->header : [];
     }
 
     /**
