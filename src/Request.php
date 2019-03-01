@@ -34,6 +34,15 @@ class Request extends \Mix\Http\Message\Base\Request
     }
 
     /**
+     * 返回套接字描述符
+     * @return int
+     */
+    public function getFildDescriptor()
+    {
+        return $this->_requester->fd;
+    }
+
+    /**
      * 返回原始的HTTP包体
      * @return string
      */
