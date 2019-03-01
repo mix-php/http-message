@@ -68,8 +68,6 @@ class Response extends \Mix\Http\Message\Base\Response
         $this->_isSent = true;
         // 预处理
         $this->prepare();
-        // 清扫组件容器
-        \Mix::$app->cleanComponents();
         // 发送
         $this->sendStatusCode();
         $this->sendHeaders();
