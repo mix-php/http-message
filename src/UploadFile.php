@@ -2,7 +2,7 @@
 
 namespace Mix\Http\Message;
 
-use Mix\Helpers\RandomStringHelper;
+use Mix\Helper\RandomStringHelper;
 
 /**
  * UploadFile类

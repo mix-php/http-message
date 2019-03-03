@@ -3,7 +3,7 @@
 namespace Mix\Http\Message;
 
 use Mix\Core\Bean\AbstractObject;
-use Mix\Helpers\JsonHelper;
+use Mix\Helper\JsonHelper;
 
 /**
  * JSON 类
