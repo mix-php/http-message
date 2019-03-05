@@ -16,6 +16,12 @@ class Request extends \Mix\Http\Message\Base\Request
     protected $_requester;
 
     /**
+     * 文件描述符
+     * @var int
+     */
+    public $fd;
+
+    /**
      * 针对每个请求执行初始化
      * @param \Swoole\Http\Request $request
      */
@@ -25,21 +31,23 @@ class Request extends \Mix\Http\Message\Base\Request
         $this->_requester = $request;
         // 执行初始化
         $this->setRoute([]);
-        $this->_get    = isset($request->get) ? $request->get : [];
-        $this->_post   = isset($request->post) ? $request->post : [];
-        $this->_files  = isset($request->files) ? $request->files : [];
+        $this->_get = isset($request->get) ? $request->get : [];
+        $this->_post = isset($request->post) ? $request->post : [];
+        $this->_files = isset($request->files) ? $request->files : [];
         $this->_cookie = isset($request->cookie) ? $request->cookie : [];
         $this->_server = isset($request->server) ? $request->server : [];
         $this->_header = isset($request->header) ? $request->header : [];
+        $this->fd = $request->fd;
+        // 设置组件状态
+        $this->setStatus(ComponentInterface::STATUS_RUNNING);
     }
 
     /**
-     * 返回套接字描述符
-     * @return int
+     * 前置处理事件
      */
-    public function getFileDescriptor()
+    public function onBeforeInitialize()
     {
-        return $this->_requester->fd;
+        // 移除设置组件状态
     }
 
     /**

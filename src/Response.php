@@ -24,11 +24,21 @@ class Response extends \Mix\Http\Message\Base\Response
         // 设置响应者
         $this->_responder = $response;
         // 执行初始化
-        $this->format     = $this->defaultFormat;
+        $this->format = $this->defaultFormat;
         $this->statusCode = 200;
-        $this->content    = '';
-        $this->headers    = [];
-        $this->_isSent    = false;
+        $this->content = '';
+        $this->headers = [];
+        $this->_isSent = false;
+        // 设置组件状态
+        $this->setStatus(ComponentInterface::STATUS_RUNNING);
+    }
+
+    /**
+     * 前置处理事件
+     */
+    public function onBeforeInitialize()
+    {
+        // 移除设置组件状态
     }
 
     /**
