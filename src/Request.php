@@ -37,7 +37,7 @@ class Request extends \Mix\Http\Message\Base\Request
      * 返回套接字描述符
      * @return int
      */
-    public function getFildDescriptor()
+    public function getFileDescriptor()
     {
         return $this->_requester->fd;
     }
