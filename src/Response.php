@@ -2,6 +2,8 @@
 
 namespace Mix\Http\Message;
 
+use Mix\Core\Component\ComponentInterface;
+
 /**
  * Response组件
  * @author LIUJIAN <coder.keda@gmail.com>
