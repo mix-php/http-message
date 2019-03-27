@@ -6,7 +6,7 @@ use Mix\Core\Component\ComponentInterface;
 
 /**
  * Request组件
- * @author LIUJIAN <coder.keda@gmail.com>
+ * @author liu,jian <coder.keda@gmail.com>
  */
 class Request extends \Mix\Http\Message\Base\Request
 {

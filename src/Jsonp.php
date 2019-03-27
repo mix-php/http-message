@@ -7,7 +7,7 @@ use Mix\Helper\JsonHelper;
 
 /**
  * JSONP 类
- * @author LIUJIAN <coder.keda@gmail.com>
+ * @author liu,jian <coder.keda@gmail.com>
  */
 class Jsonp extends AbstractObject
 {

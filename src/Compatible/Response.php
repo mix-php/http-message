@@ -4,7 +4,7 @@ namespace Mix\Http\Message\Compatible;
 
 /**
  * Response组件
- * @author LIUJIAN <coder.keda@gmail.com>
+ * @author liu,jian <coder.keda@gmail.com>
  */
 class Response extends \Mix\Http\Message\Base\Response
 {

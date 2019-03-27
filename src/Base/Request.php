@@ -6,7 +6,7 @@ use Mix\Core\Component\AbstractComponent;
 
 /**
  * Request组件基类
- * @author LIUJIAN <coder.keda@gmail.com>
+ * @author liu,jian <coder.keda@gmail.com>
  */
 class Request extends AbstractComponent
 {
