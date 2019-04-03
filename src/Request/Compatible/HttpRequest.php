@@ -2,12 +2,15 @@
 
 namespace Mix\Http\Message\Request\Compatible;
 
+use Mix\Http\Message\Request\HttpRequestInterface;
+use Mix\Http\Message\Request\AbstractHttpRequest;
+
 /**
  * Class HttpRequest
  * @package Mix\Http\Message\Request\Compatible
  * @author liu,jian <coder.keda@gmail.com>
  */
-class HttpRequest extends \Mix\Http\Message\Request\Base\HttpRequest
+class HttpRequest extends AbstractHttpRequest implements HttpRequestInterface
 {
 
     /**

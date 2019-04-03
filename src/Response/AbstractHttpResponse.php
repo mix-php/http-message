@@ -1,16 +1,15 @@
 <?php
 
-namespace Mix\Http\Message\Response\Base;
+namespace Mix\Http\Message\Response;
 
 use Mix\Core\Component\AbstractComponent;
-use Mix\Http\Message\Response\HttpResponseInterface;
 
 /**
- * Class HttpResponse
- * @package Mix\Http\Message\Response\Base
+ * Class AbstractHttpResponse
+ * @package Mix\Http\Message\Response
  * @author liu,jian <coder.keda@gmail.com>
  */
-class HttpResponse extends AbstractComponent implements HttpResponseInterface
+abstract class AbstractHttpResponse extends AbstractComponent
 {
 
     /**

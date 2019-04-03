@@ -9,7 +9,7 @@ use Mix\Core\Component\ComponentInterface;
  * @package Mix\Http\Message\Request
  * @author liu,jian <coder.keda@gmail.com>
  */
-class HttpRequest extends \Mix\Http\Message\Request\Base\HttpRequest
+class HttpRequest extends AbstractHttpRequest implements HttpRequestInterface
 {
 
     /**
@@ -34,13 +34,13 @@ class HttpRequest extends \Mix\Http\Message\Request\Base\HttpRequest
         $this->_requester = $request;
         // 执行初始化
         $this->setRoute([]);
-        $this->_get = isset($request->get) ? $request->get : [];
-        $this->_post = isset($request->post) ? $request->post : [];
-        $this->_files = isset($request->files) ? $request->files : [];
+        $this->_get    = isset($request->get) ? $request->get : [];
+        $this->_post   = isset($request->post) ? $request->post : [];
+        $this->_files  = isset($request->files) ? $request->files : [];
         $this->_cookie = isset($request->cookie) ? $request->cookie : [];
         $this->_server = isset($request->server) ? $request->server : [];
         $this->_header = isset($request->header) ? $request->header : [];
-        $this->fd = $request->fd;
+        $this->fd      = $request->fd;
         // 设置组件状态
         $this->setStatus(ComponentInterface::STATUS_RUNNING);
     }
