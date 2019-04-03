@@ -2,15 +2,19 @@
 
 namespace Mix\Http\Message\Request\Compatible;
 
+use Mix\Http\Message\Request\HttpRequestInterface;
+
 /**
  * Class HttpRequest
  * @package Mix\Http\Message\Request\Compatible
  * @author liu,jian <coder.keda@gmail.com>
  */
-class HttpRequest extends \Mix\Http\Message\Request\Base\HttpRequest
+class HttpRequest extends \Mix\Http\Message\Request\Base\HttpRequest implements HttpRequestInterface
 {
 
-    // 初始化事件
+    /**
+     * 初始化事件
+     */
     public function onInitialize()
     {
         parent::onInitialize();
@@ -18,19 +22,24 @@ class HttpRequest extends \Mix\Http\Message\Request\Base\HttpRequest
         $this->initialize();
     }
 
-    // 初始化
+    /**
+     * 初始化
+     */
     protected function initialize()
     {
         $this->_get    = $_GET;
         $this->_post   = $_POST;
         $this->_files  = $_FILES;
         $this->_cookie = $_COOKIE;
-        $this->setHeader();
-        $this->setServer();
+        $this->_header = $this->parseHeader();
+        $this->_server = $this->parseServer();
     }
 
-    // 设置 HEADER 值
-    protected function setHeader()
+    /**
+     * 解析 HEADER 值
+     * @return array
+     */
+    protected function parseHeader()
     {
         $header = [];
         foreach ($_SERVER as $name => $value) {
@@ -39,16 +48,22 @@ class HttpRequest extends \Mix\Http\Message\Request\Base\HttpRequest
                 unset($_SERVER[$name]);
             }
         }
-        $this->_header = $header;
+        return $header;
     }
 
-    // 设置 SERVER 值
-    protected function setServer()
+    /**
+     * 解析 SERVER 值
+     * @return array
+     */
+    protected function parseServer()
     {
-        $this->_server = array_change_key_case($_SERVER, CASE_LOWER);
+        return array_change_key_case($_SERVER, CASE_LOWER);
     }
 
-    // 返回原始的HTTP包体
+    /**
+     * 返回原始的HTTP包体
+     * @return bool|string
+     */
     public function getRawBody()
     {
         return file_get_contents('php://input');

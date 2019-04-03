@@ -9,7 +9,7 @@ use Mix\Core\Component\ComponentInterface;
  * @package Mix\Http\Message\Response
  * @author liu,jian <coder.keda@gmail.com>
  */
-class HttpResponse extends \Mix\Http\Message\Response\Base\HttpResponse
+class HttpResponse extends \Mix\Http\Message\Response\Base\HttpResponse implements HttpResponseInterface
 {
 
     /**

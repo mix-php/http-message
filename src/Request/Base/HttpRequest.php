@@ -30,7 +30,10 @@ class HttpRequest extends AbstractComponent
      */
     protected $_post = [];
 
-    // FILES 参数
+    /**
+     * FILES 参数
+     * @var array
+     */
     protected $_files = [];
 
     /**
