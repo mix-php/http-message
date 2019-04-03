@@ -2,14 +2,12 @@
 
 namespace Mix\Http\Message\Response\Compatible;
 
-use Mix\Http\Message\Response\HttpResponseInterface;
-
 /**
  * Class HttpResponse
  * @package Mix\Http\Message\Compatible
  * @author liu,jian <coder.keda@gmail.com>
  */
-class HttpResponse extends \Mix\Http\Message\Response\Base\HttpResponse implements HttpResponseInterface
+class HttpResponse extends \Mix\Http\Message\Response\Base\HttpResponse
 {
 
     /**

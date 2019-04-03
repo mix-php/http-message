@@ -34,7 +34,7 @@ class UploadFile
     public static function newInstance($name)
     {
         $file = \Mix::$app->request->files($name);
-        return is_null($file) ? $file : new self($file);
+        return is_null($file) ? $file : new static($file);
     }
 
     // 构造

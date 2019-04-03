@@ -11,11 +11,44 @@ interface HttpResponseInterface
 {
 
     /**
+     * 格式值
+     */
+    const FORMAT_HTML = 'html';
+    const FORMAT_JSON = 'json';
+    const FORMAT_JSONP = 'jsonp';
+    const FORMAT_XML = 'xml';
+    const FORMAT_RAW = 'raw';
+
+    /**
+     * 设置响应格式
+     * @param string $format
+     */
+    public function setFormat($format);
+
+    /**
+     * 设置状态码
+     * @param int $statusCode
+     */
+    public function setStatusCode($statusCode);
+
+    /**
+     * 设置响应内容
+     * @param string $content
+     */
+    public function setContent($content);
+
+    /**
      * 设置Header信息
      * @param $key
      * @param $value
      */
     public function setHeader($key, $value);
+
+    /**
+     * 设置全部Header信息
+     * @param array $headers
+     */
+    public function setHeaders($headers);
 
     /**
      * 设置Cookie

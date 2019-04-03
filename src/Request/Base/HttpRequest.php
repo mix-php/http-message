@@ -3,13 +3,14 @@
 namespace Mix\Http\Message\Request\Base;
 
 use Mix\Core\Component\AbstractComponent;
+use Mix\Http\Message\Request\HttpRequestInterface;
 
 /**
  * Class HttpRequest
  * @package Mix\Http\Message\Request\Base
  * @author liu,jian <coder.keda@gmail.com>
  */
-class HttpRequest extends AbstractComponent
+class HttpRequest extends AbstractComponent implements HttpRequestInterface
 {
 
     /**
@@ -71,7 +72,7 @@ class HttpRequest extends AbstractComponent
      */
     public function get($name = null, $default = null)
     {
-        return self::fetch($name, $default, $this->_get);
+        return static::fetch($name, $default, $this->_get);
     }
 
     /**
@@ -82,7 +83,7 @@ class HttpRequest extends AbstractComponent
      */
     public function post($name = null, $default = null)
     {
-        return self::fetch($name, $default, $this->_post);
+        return static::fetch($name, $default, $this->_post);
     }
 
     /**
@@ -93,7 +94,7 @@ class HttpRequest extends AbstractComponent
      */
     public function files($name = null, $default = null)
     {
-        return self::fetch($name, $default, $this->_files);
+        return static::fetch($name, $default, $this->_files);
     }
 
     /**
@@ -104,7 +105,7 @@ class HttpRequest extends AbstractComponent
      */
     public function route($name = null, $default = null)
     {
-        return self::fetch($name, $default, $this->_route);
+        return static::fetch($name, $default, $this->_route);
     }
 
     /**
@@ -115,7 +116,7 @@ class HttpRequest extends AbstractComponent
      */
     public function cookie($name = null, $default = null)
     {
-        return self::fetch($name, $default, $this->_cookie);
+        return static::fetch($name, $default, $this->_cookie);
     }
 
     /**
@@ -126,7 +127,7 @@ class HttpRequest extends AbstractComponent
      */
     public function server($name = null, $default = null)
     {
-        return self::fetch($name, $default, $this->_server);
+        return static::fetch($name, $default, $this->_server);
     }
 
     /**
@@ -137,7 +138,7 @@ class HttpRequest extends AbstractComponent
      */
     public function header($name = null, $default = null)
     {
-        return self::fetch($name, $default, $this->_header);
+        return static::fetch($name, $default, $this->_header);
     }
 
     /**

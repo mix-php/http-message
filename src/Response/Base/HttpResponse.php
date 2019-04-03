@@ -3,23 +3,15 @@
 namespace Mix\Http\Message\Response\Base;
 
 use Mix\Core\Component\AbstractComponent;
+use Mix\Http\Message\Response\HttpResponseInterface;
 
 /**
  * Class HttpResponse
  * @package Mix\Http\Message\Response\Base
  * @author liu,jian <coder.keda@gmail.com>
  */
-class HttpResponse extends AbstractComponent
+class HttpResponse extends AbstractComponent implements HttpResponseInterface
 {
-
-    /**
-     * 格式值
-     */
-    const FORMAT_HTML = 'html';
-    const FORMAT_JSON = 'json';
-    const FORMAT_JSONP = 'jsonp';
-    const FORMAT_XML = 'xml';
-    const FORMAT_RAW = 'raw';
 
     /**
      * 默认输出格式
@@ -73,6 +65,33 @@ class HttpResponse extends AbstractComponent
     protected $_isSent = false;
 
     /**
+     * 设置响应格式
+     * @param string $format
+     */
+    public function setFormat($format)
+    {
+        $this->format = $format;
+    }
+
+    /**
+     * 设置状态码
+     * @param int $statusCode
+     */
+    public function setStatusCode($statusCode)
+    {
+        $this->statusCode = $statusCode;
+    }
+
+    /**
+     * 设置响应内容
+     * @param string $content
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+    }
+
+    /**
      * 设置Header信息
      * @param $key
      * @param $value
@@ -80,6 +99,15 @@ class HttpResponse extends AbstractComponent
     public function setHeader($key, $value)
     {
         $this->headers[$key] = $value;
+    }
+
+    /**
+     * 设置全部Header信息
+     * @param array $headers
+     */
+    public function setHeaders($headers)
+    {
+        $this->headers = $headers;
     }
 
     /**
@@ -91,16 +119,16 @@ class HttpResponse extends AbstractComponent
         $headers = array_change_key_case($this->headers, CASE_LOWER);
         if (!isset($headers['content-type'])) {
             switch ($this->format) {
-                case self::FORMAT_HTML:
+                case static::FORMAT_HTML:
                     $this->setHeader('Content-Type', 'text/html; charset=utf-8');
                     break;
-                case self::FORMAT_JSON:
+                case static::FORMAT_JSON:
                     $this->setHeader('Content-Type', 'application/json; charset=utf-8');
                     break;
-                case self::FORMAT_JSONP:
+                case static::FORMAT_JSONP:
                     $this->setHeader('Content-Type', 'application/json; charset=utf-8');
                     break;
-                case self::FORMAT_XML:
+                case static::FORMAT_XML:
                     $this->setHeader('Content-Type', 'text/xml; charset=utf-8');
                     break;
             }
@@ -110,13 +138,13 @@ class HttpResponse extends AbstractComponent
         is_null($content) and $content = '';
         if (is_array($content) || is_object($content)) {
             switch ($this->format) {
-                case self::FORMAT_JSON:
+                case static::FORMAT_JSON:
                     $content = $this->json->encode($content);
                     break;
-                case self::FORMAT_JSONP:
+                case static::FORMAT_JSONP:
                     $content = $this->jsonp->encode($content);
                     break;
-                case self::FORMAT_XML:
+                case static::FORMAT_XML:
                     $content = $this->xml->encode($content);
                     break;
             }
