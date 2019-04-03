@@ -1,24 +1,30 @@
 <?php
 
-namespace Mix\Http\Message\Base;
+namespace Mix\Http\Message\Response\Base;
 
 use Mix\Core\Component\AbstractComponent;
 
 /**
- * Response组件基类
+ * Class HttpResponse
+ * @package Mix\Http\Message\Response\Base
  * @author liu,jian <coder.keda@gmail.com>
  */
-class Response extends AbstractComponent
+class HttpResponse extends AbstractComponent
 {
 
-    // 格式值
+    /**
+     * 格式值
+     */
     const FORMAT_HTML = 'html';
     const FORMAT_JSON = 'json';
     const FORMAT_JSONP = 'jsonp';
     const FORMAT_XML = 'xml';
     const FORMAT_RAW = 'raw';
 
-    // 默认输出格式
+    /**
+     * 默认输出格式
+     * @var string
+     */
     public $defaultFormat;
 
     /**
@@ -36,28 +42,49 @@ class Response extends AbstractComponent
      */
     public $xml;
 
-    // 当前输出格式
+    /**
+     * 当前输出格式
+     * @var string
+     */
     public $format;
 
-    // 状态码
+    /**
+     * 状态码
+     * @var int
+     */
     public $statusCode = 200;
 
-    // 内容
+    /**
+     * 内容
+     * @var string
+     */
     public $content = '';
 
-    // HTTP 响应头
+    /**
+     * HTTP 响应头
+     * @var array
+     */
     public $headers = [];
 
-    // 是否已经发送
+    /**
+     * 是否已经发送
+     * @var bool
+     */
     protected $_isSent = false;
 
-    // 设置Header信息
+    /**
+     * 设置Header信息
+     * @param $key
+     * @param $value
+     */
     public function setHeader($key, $value)
     {
         $this->headers[$key] = $value;
     }
 
-    // 预处理
+    /**
+     * 预处理
+     */
     protected function prepare()
     {
         // 设置默认 Content-Type 信息

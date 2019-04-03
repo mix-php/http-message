@@ -1,12 +1,13 @@
 <?php
 
-namespace Mix\Http\Message\Compatible;
+namespace Mix\Http\Message\Request\Compatible;
 
 /**
- * Request组件
+ * Class HttpRequest
+ * @package Mix\Http\Message\Request\Compatible
  * @author liu,jian <coder.keda@gmail.com>
  */
-class Request extends \Mix\Http\Message\Base\Request
+class HttpRequest extends \Mix\Http\Message\Request\Base\HttpRequest
 {
 
     // 初始化事件

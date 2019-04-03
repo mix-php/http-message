@@ -1,15 +1,18 @@
 <?php
 
-namespace Mix\Http\Message\Compatible;
+namespace Mix\Http\Message\Response\Compatible;
 
 /**
- * Response组件
+ * Class HttpResponse
+ * @package Mix\Http\Message\Compatible
  * @author liu,jian <coder.keda@gmail.com>
  */
-class Response extends \Mix\Http\Message\Base\Response
+class HttpResponse extends \Mix\Http\Message\Response\Base\HttpResponse
 {
 
-    // 初始化事件
+    /**
+     * 初始化事件
+     */
     public function onInitialize()
     {
         parent::onInitialize();
@@ -17,7 +20,9 @@ class Response extends \Mix\Http\Message\Base\Response
         $this->initialize();
     }
 
-    // 初始化
+    /**
+     * 初始化
+     */
     protected function initialize()
     {
         $this->format     = $this->defaultFormat;
@@ -27,19 +32,34 @@ class Response extends \Mix\Http\Message\Base\Response
         $this->_isSent    = false;
     }
 
-    // 设置Cookie
+    /**
+     * 设置Cookie
+     * @param $name
+     * @param string $value
+     * @param int $expires
+     * @param string $path
+     * @param string $domain
+     * @param bool $secure
+     * @param bool $httpOnly
+     * @return bool
+     */
     public function setCookie($name, $value = '', $expires = 0, $path = '', $domain = '', $secure = false, $httpOnly = false)
     {
         return setcookie($name, $value, $expires, $path, $domain, $secure, $httpOnly);
     }
 
-    // 重定向
+    /**
+     * 重定向
+     * @param $url
+     */
     public function redirect($url)
     {
         $this->setHeader('Location', $url);
     }
 
-    // 发送
+    /**
+     * 发送
+     */
     public function send()
     {
         // 多次发送处理
@@ -55,13 +75,17 @@ class Response extends \Mix\Http\Message\Base\Response
         $this->sendContent();
     }
 
-    // 发送HTTP状态码
+    /**
+     * 发送HTTP状态码
+     */
     protected function sendStatusCode()
     {
         header("HTTP/1.1 {$this->statusCode}");
     }
 
-    // 发送Header信息
+    /**
+     * 发送Header信息
+     */
     protected function sendHeaders()
     {
         foreach ($this->headers as $key => $value) {
@@ -69,7 +93,9 @@ class Response extends \Mix\Http\Message\Base\Response
         }
     }
 
-    // 发送内容
+    /**
+     * 发送内容
+     */
     protected function sendContent()
     {
         // 非标量处理

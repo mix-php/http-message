@@ -1,14 +1,15 @@
 <?php
 
-namespace Mix\Http\Message;
+namespace Mix\Http\Message\Response;
 
 use Mix\Core\Component\ComponentInterface;
 
 /**
- * Response组件
+ * Class HttpResponse
+ * @package Mix\Http\Message\Response
  * @author liu,jian <coder.keda@gmail.com>
  */
-class Response extends \Mix\Http\Message\Base\Response
+class HttpResponse extends \Mix\Http\Message\Response\Base\HttpResponse
 {
 
     /**
@@ -26,11 +27,11 @@ class Response extends \Mix\Http\Message\Base\Response
         // 设置响应者
         $this->_responder = $response;
         // 执行初始化
-        $this->format = $this->defaultFormat;
+        $this->format     = $this->defaultFormat;
         $this->statusCode = 200;
-        $this->content = '';
-        $this->headers = [];
-        $this->_isSent = false;
+        $this->content    = '';
+        $this->headers    = [];
+        $this->_isSent    = false;
         // 设置组件状态
         $this->setStatus(ComponentInterface::STATUS_RUNNING);
     }

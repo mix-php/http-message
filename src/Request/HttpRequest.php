@@ -1,14 +1,15 @@
 <?php
 
-namespace Mix\Http\Message;
+namespace Mix\Http\Message\Request;
 
 use Mix\Core\Component\ComponentInterface;
 
 /**
- * Request组件
+ * Class HttpRequest
+ * @package Mix\Http\Message\Request
  * @author liu,jian <coder.keda@gmail.com>
  */
-class Request extends \Mix\Http\Message\Base\Request
+class HttpRequest extends \Mix\Http\Message\Request\Base\HttpRequest
 {
 
     /**
