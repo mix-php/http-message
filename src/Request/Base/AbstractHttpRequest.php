@@ -1,6 +1,6 @@
 <?php
 
-namespace Mix\Http\Message\Request;
+namespace Mix\Http\Message\Request\Base;
 
 use Mix\Core\Component\AbstractComponent;
 

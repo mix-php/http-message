@@ -2,7 +2,7 @@
 
 namespace Mix\Http\Message\Response\Compatible;
 
-use Mix\Http\Message\Response\AbstractHttpResponse;
+use Mix\Http\Message\Response\Base\AbstractHttpResponse;
 use Mix\Http\Message\Response\HttpResponseInterface;
 
 /**

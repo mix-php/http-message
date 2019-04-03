@@ -1,6 +1,6 @@
 <?php
 
-namespace Mix\Http\Message\Response;
+namespace Mix\Http\Message\Response\Base;
 
 use Mix\Core\Component\AbstractComponent;
 

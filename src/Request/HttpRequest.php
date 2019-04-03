@@ -3,10 +3,11 @@
 namespace Mix\Http\Message\Request;
 
 use Mix\Core\Component\ComponentInterface;
+use Mix\Http\Message\Request\Base\AbstractHttpRequest;
 
 /**
  * Class HttpRequest
- * @package Mix\Http\Message\Request
+ * @package Mix\Http\Message\Request\Base
  * @author liu,jian <coder.keda@gmail.com>
  */
 class HttpRequest extends AbstractHttpRequest implements HttpRequestInterface

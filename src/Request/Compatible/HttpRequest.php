@@ -3,7 +3,7 @@
 namespace Mix\Http\Message\Request\Compatible;
 
 use Mix\Http\Message\Request\HttpRequestInterface;
-use Mix\Http\Message\Request\AbstractHttpRequest;
+use Mix\Http\Message\Request\Base\AbstractHttpRequest;
 
 /**
  * Class HttpRequest

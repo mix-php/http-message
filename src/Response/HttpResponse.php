@@ -3,6 +3,7 @@
 namespace Mix\Http\Message\Response;
 
 use Mix\Core\Component\ComponentInterface;
+use Mix\Http\Message\Response\Base\AbstractHttpResponse;
 
 /**
  * Class HttpResponse
