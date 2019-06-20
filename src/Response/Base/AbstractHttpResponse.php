@@ -2,7 +2,7 @@
 
 namespace Mix\Http\Message\Response\Base;
 
-use Mix\Core\Component\AbstractComponent;
+use Mix\Component\AbstractComponent;
 
 /**
  * Class AbstractHttpResponse
