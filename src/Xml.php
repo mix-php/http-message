@@ -2,7 +2,7 @@
 
 namespace Mix\Http\Message;
 
-use Mix\Core\Bean\AbstractObject;
+use Mix\Bean\Object\AbstractObject;
 use Mix\Helper\XmlHelper;
 
 /**
