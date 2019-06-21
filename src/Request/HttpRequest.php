@@ -2,7 +2,7 @@
 
 namespace Mix\Http\Message\Request;
 
-use Mix\Core\Component\ComponentInterface;
+use Mix\Component\ComponentInterface;
 use Mix\Http\Message\Request\Base\AbstractHttpRequest;
 
 /**
