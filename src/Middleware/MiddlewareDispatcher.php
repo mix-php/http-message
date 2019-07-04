@@ -63,7 +63,7 @@ class MiddlewareDispatcher
      * @param ResponseInterface $response
      * @return ResponseInterface
      */
-    public function dispatch(RequestInterface $request, ResponseInterface $response)
+    public function dispatch(RequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         /** @var MiddlewareInterface $object */
         $object = array_shift($this->objects);

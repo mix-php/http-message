@@ -2,6 +2,7 @@
 
 namespace Mix\Http\Message;
 
+use Mix\Bean\BeanInjector;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -13,6 +14,27 @@ class HttpResponse implements ResponseInterface
 {
 
     /**
+     * @var int
+     */
+    public $statusCode = 200;
+
+    /**
+     * @var string
+     */
+    public $reasonPhrase = '';
+
+    /**
+     * HttpRequest constructor.
+     * @param array $config
+     * @throws \PhpDocReader\AnnotationException
+     * @throws \ReflectionException
+     */
+    public function __construct(array $config)
+    {
+        BeanInjector::inject($this, $config);
+    }
+
+    /**
      * Gets the response status code.
      *
      * The status code is a 3-digit integer result code of the server's attempt
@@ -20,7 +42,10 @@ class HttpResponse implements ResponseInterface
      *
      * @return int Status code.
      */
-    public function getStatusCode();
+    public function getStatusCode()
+    {
+        return $this->statusCode;
+    }
 
     /**
      * Return an instance with the specified status code and, optionally, reason phrase.
@@ -42,7 +67,12 @@ class HttpResponse implements ResponseInterface
      * @return static
      * @throws \InvalidArgumentException For invalid status code arguments.
      */
-    public function withStatus($code, $reasonPhrase = '');
+    public function withStatus($code, $reasonPhrase = '')
+    {
+        $this->statusCode   = $code;
+        $this->reasonPhrase = $reasonPhrase;
+        return $this;
+    }
 
     /**
      * Gets the response reason phrase associated with the status code.
@@ -57,6 +87,9 @@ class HttpResponse implements ResponseInterface
      * @link http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
      * @return string Reason phrase; must return an empty string if none present.
      */
-    public function getReasonPhrase();
+    public function getReasonPhrase()
+    {
+        return $this->reasonPhrase;
+    }
 
 }

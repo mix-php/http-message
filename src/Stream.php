@@ -2,6 +2,8 @@
 
 namespace Mix\Http\Message;
 
+use Mix\Bean\BeanInjector;
+use Mix\Http\Message\Exception\UnavailableMethodException;
 use Psr\Http\Message\StreamInterface;
 
 /**
@@ -10,6 +12,45 @@ use Psr\Http\Message\StreamInterface;
  */
 class Stream implements StreamInterface
 {
+
+    /**
+     * @var string
+     */
+    public $file = '';
+
+    /**
+     * @var string
+     */
+    public $contents = '';
+
+    /**
+     * @var int
+     */
+    public $size = 0;
+
+    /**
+     * Stream constructor.
+     * @param array $config
+     * @throws \PhpDocReader\AnnotationException
+     * @throws \ReflectionException
+     */
+    public function __construct(array $config)
+    {
+        BeanInjector::inject($this, $config);
+        $this->init();
+    }
+
+    /**
+     * 初始化
+     */
+    public function init()
+    {
+        if ($this->file) {
+            $this->size = filesize($this->file);
+        } else {
+            $this->size = strlen($this->contents);
+        }
+    }
 
     /**
      * Reads all data from the stream into a string, from the beginning to end.
@@ -27,7 +68,7 @@ class Stream implements StreamInterface
      */
     public function __toString()
     {
-
+        return $this->getContents();
     }
 
     /**
@@ -35,7 +76,10 @@ class Stream implements StreamInterface
      *
      * @return void
      */
-    public function close();
+    public function close()
+    {
+        throw new UnavailableMethodException('Not implemented');
+    }
 
     /**
      * Separates any underlying resources from the stream.
@@ -44,14 +88,20 @@ class Stream implements StreamInterface
      *
      * @return resource|null Underlying PHP stream, if any
      */
-    public function detach();
+    public function detach()
+    {
+        throw new UnavailableMethodException('Not implemented');
+    }
 
     /**
      * Get the size of the stream if known.
      *
      * @return int|null Returns the size in bytes if known, or null if unknown.
      */
-    public function getSize();
+    public function getSize()
+    {
+        return $this->size;
+    }
 
     /**
      * Returns the current position of the file read/write pointer
@@ -59,21 +109,30 @@ class Stream implements StreamInterface
      * @return int Position of the file pointer
      * @throws \RuntimeException on error.
      */
-    public function tell();
+    public function tell()
+    {
+        throw new UnavailableMethodException('Not implemented');
+    }
 
     /**
      * Returns true if the stream is at the end of the stream.
      *
      * @return bool
      */
-    public function eof();
+    public function eof()
+    {
+        throw new UnavailableMethodException('Not implemented');
+    }
 
     /**
      * Returns whether or not the stream is seekable.
      *
      * @return bool
      */
-    public function isSeekable();
+    public function isSeekable()
+    {
+        throw new UnavailableMethodException('Not implemented');
+    }
 
     /**
      * Seek to a position in the stream.
@@ -87,7 +146,10 @@ class Stream implements StreamInterface
      *     SEEK_END: Set position to end-of-stream plus offset.
      * @throws \RuntimeException on failure.
      */
-    public function seek($offset, $whence = SEEK_SET);
+    public function seek($offset, $whence = SEEK_SET)
+    {
+        throw new UnavailableMethodException('Not implemented');
+    }
 
     /**
      * Seek to the beginning of the stream.
@@ -99,14 +161,20 @@ class Stream implements StreamInterface
      * @link http://www.php.net/manual/en/function.fseek.php
      * @throws \RuntimeException on failure.
      */
-    public function rewind();
+    public function rewind()
+    {
+        throw new UnavailableMethodException('Not implemented');
+    }
 
     /**
      * Returns whether or not the stream is writable.
      *
      * @return bool
      */
-    public function isWritable();
+    public function isWritable()
+    {
+        return false;
+    }
 
     /**
      * Write data to the stream.
@@ -115,14 +183,20 @@ class Stream implements StreamInterface
      * @return int Returns the number of bytes written to the stream.
      * @throws \RuntimeException on failure.
      */
-    public function write($string);
+    public function write($string)
+    {
+        throw new UnavailableMethodException('Not implemented');
+    }
 
     /**
      * Returns whether or not the stream is readable.
      *
      * @return bool
      */
-    public function isReadable();
+    public function isReadable()
+    {
+        return true;
+    }
 
     /**
      * Read data from the stream.
@@ -134,7 +208,10 @@ class Stream implements StreamInterface
      *     if no bytes are available.
      * @throws \RuntimeException if an error occurs.
      */
-    public function read($length);
+    public function read($length)
+    {
+        throw new UnavailableMethodException('Not implemented');
+    }
 
     /**
      * Returns the remaining contents in a string
@@ -143,7 +220,13 @@ class Stream implements StreamInterface
      * @throws \RuntimeException if unable to read or an error occurs while
      *     reading.
      */
-    public function getContents();
+    public function getContents()
+    {
+        if ($this->file) {
+            return file_get_contents($this->file);
+        }
+        return $this->contents;
+    }
 
     /**
      * Get stream metadata as an associative array or retrieve a specific key.
@@ -157,6 +240,9 @@ class Stream implements StreamInterface
      *     provided. Returns a specific key value if a key is provided and the
      *     value is found, or null if the key is not found.
      */
-    public function getMetadata($key = null);
+    public function getMetadata($key = null)
+    {
+        throw new UnavailableMethodException('Not implemented');
+    }
 
 }

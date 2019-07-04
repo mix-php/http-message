@@ -20,6 +20,6 @@ interface MiddlewareInterface
      * @param \Closure $next
      * @return ResponseInterface
      */
-    public function process(RequestInterface $request, ResponseInterface $response, \Closure $next);
+    public function process(RequestInterface $request, ResponseInterface $response, \Closure $next): ResponseInterface;
 
 }

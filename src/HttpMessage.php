@@ -30,6 +30,26 @@ class HttpMessage implements MessageInterface
     public $body;
 
     /**
+     * 实例化
+     * @param \Swoole\Http\Request $request
+     * @return HttpServerRequest
+     * @throws \PhpDocReader\AnnotationException
+     * @throws \ReflectionException
+     */
+    public static function new(\Swoole\Http\Request $request)
+    {
+        $serserProtocol = explode('/', $request->server['server_protocol']);
+        list(, $protocolVersion) = $serserProtocol;
+        $headers = $request->header ?? [];
+        $body    = new Stream(['contents' => $request->rawContent()]);
+        return new static([
+            'protocolVersion' => $protocolVersion,
+            'headers'         => $headers,
+            'body'            => $body,
+        ]);
+    }
+
+    /**
      * HttpRequest constructor.
      * @param array $config
      * @throws \PhpDocReader\AnnotationException

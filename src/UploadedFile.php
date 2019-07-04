@@ -2,6 +2,7 @@
 
 namespace Mix\Http\Message;
 
+use Mix\Bean\BeanInjector;
 use Mix\Helper\RandomStringHelper;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
@@ -15,34 +16,49 @@ class UploadedFile implements UploadedFileInterface
 {
 
     /**
-     * 文件名
-     * @var string
+     * @var StreamInterface
      */
-    public $name;
+    public $stream;
 
     /**
-     * MIME类型
-     * @var string
+     * @var int
      */
-    public $type;
+    public $size;
 
     /**
-     * 临时文件
-     * @var string
-     */
-    public $tmpName;
-
-    /**
-     * 错误码
      * @var int
      */
     public $error;
 
     /**
-     * 文件尺寸
-     * @var int
+     * @var string
      */
-    public $size;
+    public $clientFilename;
+
+    /**
+     * @var string
+     */
+    public $clientMediaType;
+
+    /**
+     * HttpRequest constructor.
+     * @param array $config
+     * @throws \PhpDocReader\AnnotationException
+     * @throws \ReflectionException
+     */
+    public function __construct(array $config)
+    {
+        BeanInjector::inject($this, $config);
+        $this->init();
+    }
+
+    /**
+     * 初始化
+     */
+    public function init()
+    {
+        $this->size = $this->stream->getSize();
+    }
 
     /**
      * Retrieve a stream representing the uploaded file.
@@ -60,7 +76,10 @@ class UploadedFile implements UploadedFileInterface
      * @throws \RuntimeException in cases when no stream is available or can be
      *     created.
      */
-    public function getStream();
+    public function getStream()
+    {
+        return $this->stream;
+    }
 
     /**
      * Move the uploaded file to a new location.
@@ -94,7 +113,16 @@ class UploadedFile implements UploadedFileInterface
      * @throws \RuntimeException on any error during the move operation, or on
      *     the second or subsequent call to the method.
      */
-    public function moveTo($targetPath);
+    public function moveTo($targetPath)
+    {
+        // 建立目录
+        $dir = dirname($targetPath);
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+        // 移动
+        return move_uploaded_file($this->clientFilename, $targetPath);
+    }
 
     /**
      * Retrieve the file size.
@@ -105,7 +133,10 @@ class UploadedFile implements UploadedFileInterface
      *
      * @return int|null The file size in bytes or null if unknown.
      */
-    public function getSize();
+    public function getSize()
+    {
+        return $this->size;
+    }
 
     /**
      * Retrieve the error associated with the uploaded file.
@@ -121,7 +152,10 @@ class UploadedFile implements UploadedFileInterface
      * @see http://php.net/manual/en/features.file-upload.errors.php
      * @return int One of PHP's UPLOAD_ERR_XXX constants.
      */
-    public function getError();
+    public function getError()
+    {
+        return $this->error;
+    }
 
     /**
      * Retrieve the filename sent by the client.
@@ -136,7 +170,10 @@ class UploadedFile implements UploadedFileInterface
      * @return string|null The filename sent by the client or null if none
      *     was provided.
      */
-    public function getClientFilename();
+    public function getClientFilename()
+    {
+        return $this->clientFilename;
+    }
 
     /**
      * Retrieve the media type sent by the client.
@@ -151,75 +188,9 @@ class UploadedFile implements UploadedFileInterface
      * @return string|null The media type sent by the client or null if none
      *     was provided.
      */
-    public function getClientMediaType();
-
-
-    /**
-     * 创建实例，通过表单名称
-     * @param $name
-     * @return $this
-     */
-    public static function newInstance($name)
+    public function getClientMediaType()
     {
-        $file = \Mix::$app->request->files($name);
-        return is_null($file) ? $file : new static($file);
-    }
-
-    /**
-     * UploadFile constructor.
-     * @param $file
-     */
-    public function __construct($file)
-    {
-        $this->name    = $file['name'];
-        $this->type    = $file['type'];
-        $this->tmpName = $file['tmp_name'];
-        $this->error   = $file['error'];
-        $this->size    = $file['size'];
-    }
-
-    /**
-     * 文件另存为
-     * @param $filename
-     * @return bool
-     */
-    public function saveAs($filename)
-    {
-        $dir = dirname($filename);
-        if (!is_dir($dir)) {
-            mkdir($dir, 0777, true);
-        }
-        $bytes = file_put_contents($filename, file_get_contents($this->tmpName));
-        return $bytes ? true : false;
-    }
-
-    /**
-     * 获取基础名称
-     * @return mixed
-     */
-    public function getBaseName()
-    {
-        return pathinfo($this->name)['filename'];
-    }
-
-    /**
-     * 获取扩展名
-     * @return string
-     */
-    public function getExtension()
-    {
-        return pathinfo($this->name)['extension'] ?? '';
-    }
-
-    /**
-     * 获取随机文件名
-     * @return string
-     */
-    public function getRandomFileName()
-    {
-        $extension = $this->getExtension();
-        $extension = $extension ? ".{$extension}" : '';
-        return md5(RandomStringHelper::randomAlphanumeric(32)) . $extension;
+        return $this->clientMediaType;
     }
 
 }
