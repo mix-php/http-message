@@ -46,53 +46,6 @@ class HttpServerRequest extends HttpRequest implements ServerRequestInterface
     public $attributes = [];
 
     /**
-     * 实例化
-     * @param \Swoole\Http\Request $request
-     * @return HttpServerRequest
-     * @throws \PhpDocReader\AnnotationException
-     * @throws \ReflectionException
-     */
-    public static function new(\Swoole\Http\Request $request)
-    {
-        $serserProtocol = explode('/', $request->server['server_protocol']);
-        list($scheme, $protocolVersion) = $serserProtocol;
-        $scheme        = strtolower($scheme);
-        $headers       = $request->header ?? [];
-        $body          = new Stream(['contents' => $request->rawContent()]);
-        $method        = $request->server['request_method'] ?? '';
-        $host          = $request->header['host'] ?? '';
-        $requestUri    = $request->server['request_uri'] ?? '';
-        $queryString   = $request->server['query_string'] ?? '';
-        $uri           = new Uri($scheme . '://' . $host . $requestUri . ($queryString ? "?{$queryString}" : ''));
-        $serverParams  = $request->server ?? [];
-        $cookieParams  = $request->cookie ?? [];
-        $queryParams   = $request->get ?? [];
-        $uploadedFiles = [];
-        foreach ($request->files ?? [] as $name => $file) {
-            $uploadedFiles[] = new UploadedFile([
-                'stream'          => new Stream(['file' => $file['tmp_name']]),
-                'error'           => $file['error'],
-                'clientFilename'  => $file['tmp_name'],
-                'clientMediaType' => $file['type'],
-            ]);
-        }
-        $parsedBody = $request->post ?? [];
-        return new static([
-            'protocolVersion' => $protocolVersion,
-            'headers'         => $headers,
-            'body'            => $body,
-            'requestTarget'   => '/',
-            'method'          => $method,
-            'uri'             => $uri,
-            'serverParams'    => $serverParams,
-            'cookieParams'    => $cookieParams,
-            'queryParams'     => $queryParams,
-            'uploadedFiles'   => $uploadedFiles,
-            'parsedBody'      => $parsedBody,
-        ]);
-    }
-
-    /**
      * HttpServerRequest constructor.
      * @param array $config
      * @throws \PhpDocReader\AnnotationException

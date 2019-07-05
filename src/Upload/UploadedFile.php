@@ -1,9 +1,7 @@
 <?php
 
-namespace Mix\Http\Message;
+namespace Mix\Http\Message\Upload;
 
-use Mix\Bean\BeanInjector;
-use Mix\Helper\RandomStringHelper;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
 
@@ -46,18 +44,13 @@ class UploadedFile implements UploadedFileInterface
      * @throws \PhpDocReader\AnnotationException
      * @throws \ReflectionException
      */
-    public function __construct(array $config)
+    public function __construct(StreamInterface $stream, int $size, int $error, string $clientFilename, string $clientMediaType)
     {
-        BeanInjector::inject($this, $config);
-        $this->init();
-    }
-
-    /**
-     * 初始化
-     */
-    public function init()
-    {
-        $this->size = $this->stream->getSize();
+        $this->stream          = $stream;
+        $this->size            = $size;
+        $this->error           = $error;
+        $this->clientFilename  = $clientFilename;
+        $this->clientMediaType = $clientMediaType;
     }
 
     /**

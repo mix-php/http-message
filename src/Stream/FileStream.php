@@ -1,27 +1,21 @@
 <?php
 
-namespace Mix\Http\Message;
+namespace Mix\Http\Message\Stream;
 
-use Mix\Bean\BeanInjector;
 use Mix\Http\Message\Exception\UnavailableMethodException;
 use Psr\Http\Message\StreamInterface;
 
 /**
- * Class Stream
+ * Class FileStream
  * @package Mix\Http\Message
  */
-class Stream implements StreamInterface
+class FileStream implements StreamInterface
 {
 
     /**
      * @var string
      */
-    public $file = '';
-
-    /**
-     * @var string
-     */
-    public $contents = '';
+    public $filename = '';
 
     /**
      * @var int
@@ -30,14 +24,14 @@ class Stream implements StreamInterface
 
     /**
      * Stream constructor.
-     * @param array $config
+     * @param string $filename
      * @throws \PhpDocReader\AnnotationException
      * @throws \ReflectionException
      */
-    public function __construct(array $config)
+    public function __construct(string $filename)
     {
-        BeanInjector::inject($this, $config);
-        $this->init();
+        $this->filename = $filename;
+        $this->size     = filesize($filename);
     }
 
     /**
@@ -222,10 +216,7 @@ class Stream implements StreamInterface
      */
     public function getContents()
     {
-        if ($this->file) {
-            return file_get_contents($this->file);
-        }
-        return $this->contents;
+        return file_get_contents($this->filename);
     }
 
     /**

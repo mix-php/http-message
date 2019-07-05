@@ -10,8 +10,13 @@ use Psr\Http\Message\ResponseInterface;
  * @package Mix\Http\Message
  * @author liu,jian <coder.keda@gmail.com>
  */
-class HttpResponse implements ResponseInterface
+class HttpResponse extends HttpMessage implements ResponseInterface
 {
+
+    /**
+     * @var \Swoole\Http\Response
+     */
+    public $responder;
 
     /**
      * @var int
@@ -24,14 +29,19 @@ class HttpResponse implements ResponseInterface
     public $reasonPhrase = '';
 
     /**
-     * HttpRequest constructor.
+     * @var Cookie[]
+     */
+    public $cookies = [];
+
+    /**
+     * HttpResponse constructor.
      * @param array $config
      * @throws \PhpDocReader\AnnotationException
      * @throws \ReflectionException
      */
     public function __construct(array $config)
     {
-        BeanInjector::inject($this, $config);
+        parent::__construct($config);
     }
 
     /**
@@ -90,6 +100,50 @@ class HttpResponse implements ResponseInterface
     public function getReasonPhrase()
     {
         return $this->reasonPhrase;
+    }
+
+    /**
+     * 返回cookies
+     * @return Cookie[]
+     */
+    public function getCookies()
+    {
+        return $this->cookies;
+    }
+
+    /**
+     * 设置cookies
+     * @param Cookie[] $cookies
+     * @return static
+     */
+    public function withCookies(array $cookies)
+    {
+        $this->cookies = $cookies;
+        return $this;
+    }
+
+    /**
+     * 设置cookie
+     * @param $name
+     * @param $value
+     * @return static
+     */
+    public function withCookie(Cookie $cookie)
+    {
+        $this->cookies[] = $cookie;
+        return $this;
+    }
+
+    public function send()
+    {
+        $headers = $this->getHeaders();
+        foreach ($headers as $name => $value) {
+            $this->responder->header($name, $value);
+        }
+        $cookies = $this->getCookies();
+        foreach ($cookies as $cookie) {
+            $this->responder->cookie($cookie->getName(), $cookie->getValue(), $cookie->);
+        }
     }
 
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Mix\Http\Message;
+namespace Mix\Http\Message\Uri;
 
 use Psr\Http\Message\UriInterface;
 

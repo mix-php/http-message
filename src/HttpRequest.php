@@ -31,35 +31,6 @@ class HttpRequest extends HttpMessage implements RequestInterface
     public $uri;
 
     /**
-     * 实例化
-     * @param \Swoole\Http\Request $request
-     * @return HttpServerRequest
-     * @throws \PhpDocReader\AnnotationException
-     * @throws \ReflectionException
-     */
-    public static function new(\Swoole\Http\Request $request)
-    {
-        $serserProtocol = explode('/', $request->server['server_protocol']);
-        list($scheme, $protocolVersion) = $serserProtocol;
-        $scheme      = strtolower($scheme);
-        $headers     = $request->header ?? [];
-        $body        = new Stream(['contents' => $request->rawContent()]);
-        $method      = $request->server['request_method'] ?? '';
-        $host        = $request->header['host'] ?? '';
-        $requestUri  = $request->server['request_uri'] ?? '';
-        $queryString = $request->server['query_string'] ?? '';
-        $uri         = new Uri($scheme . '://' . $host . $requestUri . ($queryString ? "?{$queryString}" : ''));
-        return new static([
-            'protocolVersion' => $protocolVersion,
-            'headers'         => $headers,
-            'body'            => $body,
-            'requestTarget'   => '/',
-            'method'          => $method,
-            'uri'             => $uri,
-        ]);
-    }
-
-    /**
      * HttpRequest constructor.
      * @param array $config
      * @throws \PhpDocReader\AnnotationException
