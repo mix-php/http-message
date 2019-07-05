@@ -32,11 +32,13 @@ class MiddlewareDispatcher
 
     /**
      * MiddlewareDispatcher constructor.
-     * @param array $config
+     * @param string $namespace
+     * @param array $middleware
      */
-    public function __construct(array $config)
+    public function __construct(string $namespace, array $middleware)
     {
-        BeanInjector::inject($this, $config);
+        $this->namespace  = $namespace;
+        $this->middleware = $middleware;
         $this->init();
     }
 
@@ -47,7 +49,7 @@ class MiddlewareDispatcher
     {
         $objects = [];
         foreach ($this->middleware as $key => $name) {
-            $class  = "{$namespace}\\{$name}Middleware";
+            $class  = "{$this->namespace}\\{$name}Middleware";
             $object = new $class();
             if (!($object instanceof MiddlewareInterface)) {
                 throw new TypeException("{$class} type is not '" . MiddlewareInterface::class . "'");

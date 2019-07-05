@@ -11,7 +11,7 @@ use Psr\Http\Message\ResponseInterface;
  * @package Mix\Http\Message
  * @author liu,jian <coder.keda@gmail.com>
  */
-class Response extends HttpMessage implements ResponseInterface
+class Response extends Message implements ResponseInterface
 {
 
     /**
@@ -141,9 +141,13 @@ class Response extends HttpMessage implements ResponseInterface
      * @param string $charset
      * @return static
      */
-    public function withContentType(string $type, string $charset = 'utf-8')
+    public function withContentType(string $type, string $charset = '')
     {
-        return $this->withHeader('Content-Type', "{$type}; charset={$charset}");
+        $value = $type;
+        if ($charset) {
+            $value = "{$type}; charset={$charset}";
+        }
+        return $this->withHeader('Content-Type', $value);
     }
 
     /**

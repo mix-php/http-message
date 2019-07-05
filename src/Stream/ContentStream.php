@@ -15,11 +15,6 @@ class ContentStream implements StreamInterface
     /**
      * @var string
      */
-    public $file = '';
-
-    /**
-     * @var string
-     */
     public $contents = '';
 
     /**
@@ -36,7 +31,7 @@ class ContentStream implements StreamInterface
     public function __construct(string $contents)
     {
         $this->contents = $contents;
-        $this->size     = filesize($this->file);
+        $this->size     = strlen($contents);
     }
 
     /**

@@ -12,7 +12,7 @@ use Psr\Http\Message\UriInterface;
  * @package Mix\Http\Message
  * @author liu,jian <coder.keda@gmail.com>
  */
-class Request extends HttpMessage implements RequestInterface
+class Request extends Message implements RequestInterface
 {
 
     /**
