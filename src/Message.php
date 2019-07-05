@@ -7,11 +7,11 @@ use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\StreamInterface;
 
 /**
- * Class HttpMessage
+ * Class Message
  * @package Mix\Http\Message
  * @author liu,jian <coder.keda@gmail.com>
  */
-class HttpMessage implements MessageInterface
+class Message implements MessageInterface
 {
 
     /**

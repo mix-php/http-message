@@ -2,16 +2,16 @@
 
 namespace Mix\Http\Message\Factory;
 
-use Mix\Http\Message\HttpRequest;
+use Mix\Http\Message\Request;
 use Mix\Http\Message\Stream\ContentStream;
 use Mix\Http\Message\Uri\Uri;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Class HttpRequestFactory
+ * Class RequestFactory
  * @package Mix\Http\Message\Factory
  */
-class HttpRequestFactory
+class RequestFactory
 {
 
     /**
@@ -37,7 +37,7 @@ class HttpRequestFactory
         $requestUri  = $request->server['request_uri'] ?? '';
         $queryString = $request->server['query_string'] ?? '';
         $uri         = new Uri($scheme . '://' . $host . $requestUri . ($queryString ? "?{$queryString}" : ''));
-        return new HttpRequest([
+        return new Request([
             'protocolVersion' => $protocolVersion,
             'headers'         => $headers,
             'body'            => $body,

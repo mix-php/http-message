@@ -8,11 +8,11 @@ use Psr\Http\Message\UploadedFileInterface;
 use Psr\Http\Message\UriInterface;
 
 /**
- * Class HttpServerRequest
+ * Class ServerRequest
  * @package Mix\Http\Message
  * @author liu,jian <coder.keda@gmail.com>
  */
-class HttpServerRequest extends HttpRequest implements ServerRequestInterface
+class ServerRequest extends HttpRequest implements ServerRequestInterface
 {
 
     /**

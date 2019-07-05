@@ -2,7 +2,7 @@
 
 namespace Mix\Http\Message\Factory;
 
-use Mix\Http\Message\HttpServerRequest;
+use Mix\Http\Message\ServerRequest;
 use Mix\Http\Message\Stream\ContentStream;
 use Mix\Http\Message\Stream\FileStream;
 use Mix\Http\Message\Upload\UploadedFile;
@@ -10,10 +10,10 @@ use Mix\Http\Message\Uri\Uri;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Class HttpServerRequestFactory
+ * Class ServerRequestFactory
  * @package Mix\Http\Message\Factory
  */
-class HttpServerRequestFactory
+class ServerRequestFactory
 {
 
     /**
@@ -52,7 +52,7 @@ class HttpServerRequestFactory
             ]);
         }
         $parsedBody = $request->post ?? [];
-        return new HttpServerRequest([
+        return new ServerRequest([
             'protocolVersion' => $protocolVersion,
             'headers'         => $headers,
             'body'            => $body,

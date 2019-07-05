@@ -7,11 +7,11 @@ use Mix\Http\Message\Cookie\Cookie;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * Class HttpResponse
+ * Class Response
  * @package Mix\Http\Message
  * @author liu,jian <coder.keda@gmail.com>
  */
-class HttpResponse extends HttpMessage implements ResponseInterface
+class Response extends HttpMessage implements ResponseInterface
 {
 
     /**

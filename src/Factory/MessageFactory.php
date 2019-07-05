@@ -2,15 +2,15 @@
 
 namespace Mix\Http\Message\Factory;
 
-use Mix\Http\Message\HttpMessage;
+use Mix\Http\Message\Message;
 use Mix\Http\Message\Stream\ContentStream;
 use Psr\Http\Message\MessageInterface;
 
 /**
- * Class HttpMessageFactory
+ * Class MessageFactory
  * @package Mix\Http\Message\Factory
  */
-class HttpMessageFactory
+class MessageFactory
 {
 
     /**
@@ -30,7 +30,7 @@ class HttpMessageFactory
         list(, $protocolVersion) = $serserProtocol;
         $headers = $request->header ?? [];
         $body    = new ContentStream($request->rawContent());
-        return new HttpMessage([
+        return new Message([
             'protocolVersion' => $protocolVersion,
             'headers'         => $headers,
             'body'            => $body,
