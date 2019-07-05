@@ -4,6 +4,7 @@ namespace Mix\Http\Message\Factory;
 
 use Mix\Http\Message\HttpRequest;
 use Mix\Http\Message\Stream\ContentStream;
+use Mix\Http\Message\Uri\Uri;
 use Psr\Http\Message\RequestInterface;
 
 /**

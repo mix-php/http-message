@@ -3,6 +3,7 @@
 namespace Mix\Http\Message;
 
 use Mix\Bean\BeanInjector;
+use Mix\Http\Message\Cookie\Cookie;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -134,16 +135,56 @@ class HttpResponse extends HttpMessage implements ResponseInterface
         return $this;
     }
 
+    /**
+     * 设置ContentType
+     * @param string $type
+     * @param string $charset
+     * @return static
+     */
+    public function withContentType(string $type, string $charset = 'utf-8')
+    {
+        return $this->withHeader('Content-Type', "{$type}; charset={$charset}");
+    }
+
+    /**
+     * 重定向
+     * @param string $url
+     * @param int $status
+     * @return static
+     */
+    public function redirect(string $url, int $status = 302)
+    {
+        return $this->withAddedHeader('Location', $url)->withStatus($status);
+    }
+
+    /**
+     * 发送
+     */
     public function send()
     {
         $headers = $this->getHeaders();
         foreach ($headers as $name => $value) {
             $this->responder->header($name, $value);
         }
+
         $cookies = $this->getCookies();
         foreach ($cookies as $cookie) {
-            $this->responder->cookie($cookie->getName(), $cookie->getValue(), $cookie->);
+            $this->responder->cookie(
+                $cookie->getName(),
+                $cookie->getValue(),
+                $cookie->getExpire(),
+                $cookie->getPath(),
+                $cookie->getDomain(),
+                $cookie->getSecure(),
+                $cookie->getHttpOnly()
+            );
         }
+
+        $status = $this->getStatusCode();
+        $this->responder->status($status);
+
+        $content = $this->getBody()->getContents();
+        $this->responder->end($content);
     }
 
 }
