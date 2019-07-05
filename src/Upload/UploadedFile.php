@@ -7,7 +7,7 @@ use Psr\Http\Message\UploadedFileInterface;
 
 /**
  * Class UploadedFile
- * @package Mix\Http\Message
+ * @package Mix\Http\Message\Upload
  * @author liu,jian <coder.keda@gmail.com>
  */
 class UploadedFile implements UploadedFileInterface

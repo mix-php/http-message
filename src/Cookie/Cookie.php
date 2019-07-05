@@ -5,6 +5,7 @@ namespace Mix\Http\Message\Cookie;
 /**
  * Class Cookie
  * @package Mix\Http\Message\Cookie
+ * @author liu,jian <coder.keda@gmail.com>
  */
 class Cookie
 {

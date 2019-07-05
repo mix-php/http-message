@@ -9,6 +9,7 @@ use Psr\Http\Message\MessageInterface;
 /**
  * Class MessageFactory
  * @package Mix\Http\Message\Factory
+ * @author liu,jian <coder.keda@gmail.com>
  */
 class MessageFactory
 {

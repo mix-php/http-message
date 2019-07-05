@@ -8,6 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * Class ResponseFactory
  * @package Mix\Http\Message\Factory
+ * @author liu,jian <coder.keda@gmail.com>
  */
 class ResponseFactory
 {

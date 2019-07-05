@@ -10,6 +10,7 @@ use Psr\Http\Message\RequestInterface;
 /**
  * Class RequestFactory
  * @package Mix\Http\Message\Factory
+ * @author liu,jian <coder.keda@gmail.com>
  */
 class RequestFactory
 {

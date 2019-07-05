@@ -7,7 +7,8 @@ use Psr\Http\Message\StreamInterface;
 
 /**
  * Class ContentStream
- * @package Mix\Http\Message
+ * @package Mix\Http\Message\Stream
+ * @author liu,jian <coder.keda@gmail.com>
  */
 class ContentStream implements StreamInterface
 {
