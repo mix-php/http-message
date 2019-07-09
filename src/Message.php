@@ -2,7 +2,6 @@
 
 namespace Mix\Http\Message;
 
-use Mix\Bean\BeanInjector;
 use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\StreamInterface;
 
@@ -28,17 +27,6 @@ class Message implements MessageInterface
      * @var StreamInterface
      */
     public $body;
-
-    /**
-     * HttpRequest constructor.
-     * @param array $config
-     * @throws \PhpDocReader\AnnotationException
-     * @throws \ReflectionException
-     */
-    public function __construct(array $config)
-    {
-        BeanInjector::inject($this, $config);
-    }
 
     /**
      * Retrieves the HTTP protocol version as a string.

@@ -2,7 +2,6 @@
 
 namespace Mix\Http\Message;
 
-use Mix\Bean\BeanInjector;
 use Mix\Http\Message\Cookie\Cookie;
 use Psr\Http\Message\ResponseInterface;
 
@@ -17,7 +16,7 @@ class Response extends Message implements ResponseInterface
     /**
      * @var \Swoole\Http\Response
      */
-    public $responder;
+    public $swooleResponse;
 
     /**
      * @var int
@@ -35,14 +34,34 @@ class Response extends Message implements ResponseInterface
     public $cookies = [];
 
     /**
-     * HttpResponse constructor.
-     * @param array $config
-     * @throws \PhpDocReader\AnnotationException
-     * @throws \ReflectionException
+     * Response constructor.
+     * @param int $code
+     * @param string $reasonPhrase
      */
-    public function __construct(array $config)
+    public function __construct(int $code = 200, string $reasonPhrase = '')
     {
-        parent::__construct($config);
+        $this->statusCode   = $code;
+        $this->reasonPhrase = $reasonPhrase;
+    }
+
+    /**
+     * Get swoole response
+     * @return \Swoole\Http\Response
+     */
+    public function getSwooleResponse()
+    {
+        return $this->swooleResponse;
+    }
+
+    /**
+     * With swoole response
+     * @param \Swoole\Http\Response $response
+     * @return $this
+     */
+    public function withSwooleResponse(\Swoole\Http\Response $response)
+    {
+        $this->swooleResponse = $response;
+        return $this;
     }
 
     /**

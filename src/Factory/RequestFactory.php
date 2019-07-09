@@ -5,6 +5,7 @@ namespace Mix\Http\Message\Factory;
 use Mix\Http\Message\Request;
 use Mix\Http\Message\Stream\ContentStream;
 use Mix\Http\Message\Uri\Uri;
+use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -12,35 +13,50 @@ use Psr\Http\Message\RequestInterface;
  * @package Mix\Http\Message\Factory
  * @author liu,jian <coder.keda@gmail.com>
  */
-class RequestFactory
+class RequestFactory implements RequestFactoryInterface
 {
 
     /**
-     * Create a new RequestInterface.
      *
-     * @param \Swoole\Http\Request $request
+     *
+     * @param string $method The HTTP method associated with the request.
+     * @param UriInterface|string $uri The URI associated with the request. If
+     *     the value is a string, the factory MUST create a UriInterface
+     *     instance based on it.
+     *
      * @return RequestInterface
      */
-    public static function createFromSwoole(\Swoole\Http\Request $request): RequestInterface
+    public function createRequest(string $method, $uri): RequestInterface
     {
-        $serserProtocol = explode('/', $request->server['server_protocol']);
-        list($scheme, $protocolVersion) = $serserProtocol;
+        if (!is_string($uri)) {
+            $uri = (new UriFactory())->createUri($uri);
+        }
+        return new Request($method, $uri);
+    }
+
+    /**
+     * Create a new request.
+     *
+     * @param \Swoole\Http\Request $req
+     * @return RequestInterface
+     */
+    public function createRequestFromSwoole(\Swoole\Http\Request $req): RequestInterface
+    {
+        list($scheme, $protocolVersion) = explode('/', $req->server['server_protocol']);
+        $method      = $req->server['request_method'] ?? '';
         $scheme      = strtolower($scheme);
-        $headers     = $request->header ?? [];
-        $body        = new ContentStream($request->rawContent());
-        $method      = $request->server['request_method'] ?? '';
-        $host        = $request->header['host'] ?? '';
-        $requestUri  = $request->server['request_uri'] ?? '';
-        $queryString = $request->server['query_string'] ?? '';
+        $host        = $req->header['host'] ?? '';
+        $requestUri  = $req->server['request_uri'] ?? '';
+        $queryString = $req->server['query_string'] ?? '';
         $uri         = new Uri($scheme . '://' . $host . $requestUri . ($queryString ? "?{$queryString}" : ''));
-        return new Request([
-            'protocolVersion' => $protocolVersion,
-            'headers'         => $headers,
-            'body'            => $body,
-            'requestTarget'   => '/',
-            'method'          => $method,
-            'uri'             => $uri,
-        ]);
+        $request     = $this->createRequest($method, $uri);
+        $headers     = $req->header ?? [];
+        foreach ($headers as $name => $value) {
+            $request->withHeader($name, $value);
+        }
+        $body = (new StreamFactory())->createStream($req->rawContent());
+        $request->withBody($body);
+        return $request;
     }
 
 }

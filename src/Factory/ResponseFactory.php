@@ -3,6 +3,7 @@
 namespace Mix\Http\Message\Factory;
 
 use Mix\Http\Message\Response;
+use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -10,8 +11,23 @@ use Psr\Http\Message\ResponseInterface;
  * @package Mix\Http\Message\Factory
  * @author liu,jian <coder.keda@gmail.com>
  */
-class ResponseFactory
+class ResponseFactory implements ResponseFactoryInterface
 {
+
+    /**
+     *
+     *
+     * @param int $code HTTP status code; defaults to 200
+     * @param string $reasonPhrase Reason phrase to associate with status code
+     *     in generated response; if none is provided implementations MAY use
+     *     the defaults as suggested in the HTTP specification.
+     *
+     * @return ResponseInterface
+     */
+    public function createResponse(int $code = 200, string $reasonPhrase = ''): ResponseInterface
+    {
+        return new Response($code, $reasonPhrase);
+    }
 
     /**
      * Create a new ResponseInterface.
@@ -19,11 +35,12 @@ class ResponseFactory
      * @param \Swoole\Http\Response $response
      * @return ResponseInterface
      */
-    public static function createFromSwoole(\Swoole\Http\Response $response): ResponseInterface
+    public function createResponseFromSwoole(\Swoole\Http\Response $resp): ResponseInterface
     {
-        return new Response([
-            'responder' => $response,
-        ]);
+        /** @var Response $response */
+        $response = $this->createResponse();
+        $response->withSwooleResponse($resp);
+        return $response;
     }
 
 }

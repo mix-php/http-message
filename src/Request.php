@@ -2,7 +2,6 @@
 
 namespace Mix\Http\Message;
 
-use Mix\Bean\BeanInjector;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\UploadedFileInterface;
 use Psr\Http\Message\UriInterface;
@@ -31,14 +30,14 @@ class Request extends Message implements RequestInterface
     public $uri;
 
     /**
-     * HttpRequest constructor.
-     * @param array $config
-     * @throws \PhpDocReader\AnnotationException
-     * @throws \ReflectionException
+     * Request constructor.
+     * @param string $method
+     * @param UriInterface $uri
      */
-    public function __construct(array $config)
+    public function __construct(string $method, UriInterface $uri)
     {
-        parent::__construct($config);
+        $this->method = $method;
+        $this->uri    = $uri;
     }
 
     /**

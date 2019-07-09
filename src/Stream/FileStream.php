@@ -36,18 +36,6 @@ class FileStream implements StreamInterface
     }
 
     /**
-     * 初始化
-     */
-    public function init()
-    {
-        if ($this->file) {
-            $this->size = filesize($this->file);
-        } else {
-            $this->size = strlen($this->contents);
-        }
-    }
-
-    /**
      * Reads all data from the stream into a string, from the beginning to end.
      *
      * This method MUST attempt to seek to the beginning of the stream before
