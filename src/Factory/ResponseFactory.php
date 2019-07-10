@@ -15,7 +15,7 @@ class ResponseFactory implements ResponseFactoryInterface
 {
 
     /**
-     *
+     * Create a new response.
      *
      * @param int $code HTTP status code; defaults to 200
      * @param string $reasonPhrase Reason phrase to associate with status code
