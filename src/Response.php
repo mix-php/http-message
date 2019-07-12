@@ -187,12 +187,12 @@ class Response extends Message implements ResponseInterface
     {
         $headers = $this->getHeaders();
         foreach ($headers as $name => $value) {
-            $this->responder->header($name, $value);
+            $this->swooleResponse->header($name, $value);
         }
 
         $cookies = $this->getCookies();
         foreach ($cookies as $cookie) {
-            $this->responder->cookie(
+            $this->swooleResponse->cookie(
                 $cookie->getName(),
                 $cookie->getValue(),
                 $cookie->getExpire(),
@@ -204,10 +204,10 @@ class Response extends Message implements ResponseInterface
         }
 
         $status = $this->getStatusCode();
-        $this->responder->status($status);
+        $this->swooleResponse->status($status);
 
         $content = $this->getBody()->getContents();
-        $this->responder->end($content);
+        $this->swooleResponse->end($content);
     }
 
 }

@@ -35,7 +35,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     public $uploadedFiles = [];
 
     /**
-     * @var array|null
+     * @var null|array|object
      */
     public $parsedBody;
 
@@ -55,15 +55,6 @@ class ServerRequest extends Request implements ServerRequestInterface
         $this->method       = $method;
         $this->uri          = $uri;
         $this->serverParams = $serverParams;
-        $this->init();
-    }
-
-    /**
-     * init
-     */
-    public function init()
-    {
-        $this->attributes = $this->getParsedBody() + $this->getQueryParams() + $this->getCookieParams();
     }
 
     /**
@@ -115,6 +106,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     public function withCookieParams(array $cookies)
     {
         $this->cookieParams = $cookies;
+        $this->attributes   = $cookies + $this->attributes;
         return $this;
     }
 
@@ -160,6 +152,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     public function withQueryParams(array $query)
     {
         $this->queryParams = $query;
+        $this->attributes  = $query + $this->attributes;
         return $this;
     }
 
@@ -248,6 +241,9 @@ class ServerRequest extends Request implements ServerRequestInterface
     public function withParsedBody($data)
     {
         $this->parsedBody = $data;
+        if (is_array($data)) {
+            $this->attributes = $data + $this->attributes;
+        }
         return $this;
     }
 
