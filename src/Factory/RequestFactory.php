@@ -49,13 +49,22 @@ class RequestFactory implements RequestFactoryInterface
         $requestUri  = $req->server['request_uri'] ?? '';
         $queryString = $req->server['query_string'] ?? '';
         $uri         = new Uri($scheme . '://' . $host . $requestUri . ($queryString ? "?{$queryString}" : ''));
-        $request     = $this->createRequest($method, $uri);
-        $headers     = $req->header ?? [];
+
+        $request = $this->createRequest($method, $uri);
+
+        $headers = $req->header ?? [];
         foreach ($headers as $name => $value) {
             $request->withHeader($name, $value);
         }
-        $body = (new StreamFactory())->createStream($req->rawContent());
-        $request->withBody($body);
+
+        $contentType = $serverRequest->getHeaderLine('content-type');
+        $content     = '';
+        if (strpos($contentType, 'multipart/form-data') === false) {
+            $content = $req->rawContent();
+        }
+        $body = (new StreamFactory())->createStream($content);
+        $serverRequest->withBody($body);
+
         return $request;
     }
 

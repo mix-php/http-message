@@ -2,6 +2,7 @@
 
 namespace Mix\Http\Message\Upload;
 
+use Mix\Http\Message\Stream\FileStream;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
 
@@ -39,10 +40,12 @@ class UploadedFile implements UploadedFileInterface
     public $clientMediaType;
 
     /**
-     * HttpRequest constructor.
-     * @param array $config
-     * @throws \PhpDocReader\AnnotationException
-     * @throws \ReflectionException
+     * UploadedFile constructor.
+     * @param StreamInterface $stream
+     * @param int $size
+     * @param int $error
+     * @param string $clientFilename
+     * @param string $clientMediaType
      */
     public function __construct(StreamInterface $stream, int $size, int $error, string $clientFilename, string $clientMediaType)
     {
@@ -114,7 +117,11 @@ class UploadedFile implements UploadedFileInterface
             mkdir($dir, 0777, true);
         }
         // 移动
-        return move_uploaded_file($this->clientFilename, $targetPath);
+        if ($this->stream instanceof FileStream) {
+            move_uploaded_file($this->stream->filename, $targetPath);
+            return;
+        }
+        file_put_contents($targetPath, $this->stream->getContents());
     }
 
     /**

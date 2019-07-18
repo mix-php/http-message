@@ -206,7 +206,8 @@ class Response extends Message implements ResponseInterface
         $status = $this->getStatusCode();
         $this->swooleResponse->status($status);
 
-        $content = $this->getBody()->getContents();
+        $body    = $this->getBody();
+        $content = $body ? $body->getContents() : null;
         $this->swooleResponse->end($content);
     }
 

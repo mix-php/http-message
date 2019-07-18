@@ -65,11 +65,18 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
         foreach ($headers as $name => $value) {
             $serverRequest->withHeader($name, $value);
         }
-        $body = (new StreamFactory())->createStream($req->rawContent());
+
+        $contentType = $serverRequest->getHeaderLine('content-type');
+        $content     = '';
+        if (strpos($contentType, 'multipart/form-data') === false) {
+            $content = $req->rawContent();
+        }
+        $body = (new StreamFactory())->createStream($content);
         $serverRequest->withBody($body);
 
         $cookieParams = $req->cookie ?? [];
         $serverRequest->withCookieParams($cookieParams);
+
         $queryParams = $req->get ?? [];
         $serverRequest->withQueryParams($queryParams);
 
@@ -81,7 +88,7 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
                 $streamFactory->createStreamFromFile($file['tmp_name']),
                 $file['size'],
                 $file['error'],
-                $file['tmp_name'],
+                $file['name'],
                 $file['type']
             );
         }
