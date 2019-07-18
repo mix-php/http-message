@@ -57,6 +57,19 @@ class UploadedFile implements UploadedFileInterface
     }
 
     /**
+     * destruct
+     */
+    public function __destruct()
+    {
+        // TODO: Implement __destruct() method.
+        // 删除上传的临时文件
+        if ($this->stream instanceof FileStream) {
+            $filename = $this->stream->getFilename();
+            unlink($filename);
+        }
+    }
+
+    /**
      * Retrieve a stream representing the uploaded file.
      *
      * This method MUST return a StreamInterface instance, representing the
@@ -118,7 +131,7 @@ class UploadedFile implements UploadedFileInterface
         }
         // 移动
         if ($this->stream instanceof FileStream) {
-            move_uploaded_file($this->stream->filename, $targetPath);
+            move_uploaded_file($this->stream->getFilename(), $targetPath);
             return;
         }
         file_put_contents($targetPath, $this->stream->getContents());

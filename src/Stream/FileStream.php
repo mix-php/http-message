@@ -24,15 +24,22 @@ class FileStream implements StreamInterface
     public $size = 0;
 
     /**
-     * Stream constructor.
+     * FileStream constructor.
      * @param string $filename
-     * @throws \PhpDocReader\AnnotationException
-     * @throws \ReflectionException
      */
     public function __construct(string $filename)
     {
         $this->filename = $filename;
         $this->size     = filesize($filename);
+    }
+
+    /**
+     * Get Filename
+     * @return string
+     */
+    public function getFilename()
+    {
+        return $this->filename;
     }
 
     /**

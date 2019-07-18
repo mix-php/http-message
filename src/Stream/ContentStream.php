@@ -24,10 +24,8 @@ class ContentStream implements StreamInterface
     public $size = 0;
 
     /**
-     * Stream constructor.
+     * ContentStream constructor.
      * @param string $contents
-     * @throws \PhpDocReader\AnnotationException
-     * @throws \ReflectionException
      */
     public function __construct(string $contents)
     {
