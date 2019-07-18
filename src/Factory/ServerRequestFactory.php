@@ -44,7 +44,7 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
 
     /**
      * Create a new server request.
-     * 
+     *
      * @param \Swoole\Http\Request $req
      * @return ServerRequestInterface
      */
@@ -77,7 +77,7 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
         $uploadedFileFactory = new UploadedFileFactory;
         $streamFactory       = new StreamFactory();
         foreach ($req->files ?? [] as $name => $file) {
-            $uploadedFiles[] = $uploadedFileFactory->createUploadedFile(
+            $uploadedFiles[$name] = $uploadedFileFactory->createUploadedFile(
                 $streamFactory->createStreamFromFile($file['tmp_name']),
                 $file['size'],
                 $file['error'],
