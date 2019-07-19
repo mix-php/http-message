@@ -65,7 +65,7 @@ class UploadedFile implements UploadedFileInterface
         // 删除上传的临时文件
         if ($this->stream instanceof FileStream) {
             $filename = $this->stream->getFilename();
-            unlink($filename);
+            @unlink($filename);
         }
     }
 
@@ -131,7 +131,11 @@ class UploadedFile implements UploadedFileInterface
         }
         // 移动
         if ($this->stream instanceof FileStream) {
-            move_uploaded_file($this->stream->getFilename(), $targetPath);
+            // move_uploaded_file不可掉用两次
+            // ServerRequestFactory中已经掉用过一次，所以不能使用
+            $source = $this->stream->getFilename();
+            copy($source, $targetPath);
+            unlink($source);
             return;
         }
         file_put_contents($targetPath, $this->stream->getContents());

@@ -84,11 +84,12 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
         $uploadedFileFactory = new UploadedFileFactory;
         $streamFactory       = new StreamFactory();
         foreach ($req->files ?? [] as $name => $file) {
-            // 注意：当httpServer的handle内开启协程时，handle方法会先于Callback执行完，这时临时文件会在还没处理完成就被删除，所以这里生成新文件，在UploadedFile析构时删除该文件
-            $tmpFile = $file['tmp_name'] . '.mix';
-            move_uploaded_file($file['tmp_name'], $tmpFile);
+            // 注意：当httpServer的handle内开启协程时，handle方法会先于Callback执行完，
+            // 这时临时文件会在还没处理完成就被删除，所以这里生成新文件，在UploadedFile析构时删除该文件
+            $tmpfile = $file['tmp_name'] . '.mix';
+            move_uploaded_file($file['tmp_name'], $tmpfile);
             $uploadedFiles[$name] = $uploadedFileFactory->createUploadedFile(
-                $streamFactory->createStreamFromFile($tmpFile),
+                $streamFactory->createStreamFromFile($tmpfile),
                 $file['size'],
                 $file['error'],
                 $file['name'],
