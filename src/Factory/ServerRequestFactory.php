@@ -68,7 +68,11 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
 
         $contentType = $serverRequest->getHeaderLine('content-type');
         $content     = '';
-        if (strpos($contentType, 'multipart/form-data') === false) {
+        if (
+            strpos($contentType, 'multipart/form-data') === false
+            &&
+            strpos($contentType, 'application/x-www-form-urlencoded') === false
+        ) {
             $content = $req->rawContent();
         }
         $body = (new StreamFactory())->createStream($content);
