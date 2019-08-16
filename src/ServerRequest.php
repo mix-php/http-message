@@ -15,6 +15,11 @@ class ServerRequest extends Request implements ServerRequestInterface
 {
 
     /**
+     * @var \Swoole\Http\Request
+     */
+    public $swooleRequest;
+
+    /**
      * @var array
      */
     public $serverParams = [];
@@ -55,6 +60,26 @@ class ServerRequest extends Request implements ServerRequestInterface
         $this->method       = $method;
         $this->uri          = $uri;
         $this->serverParams = $serverParams;
+    }
+
+    /**
+     * Get swoole request
+     * @return \Swoole\Http\Request
+     */
+    public function getSwooleRequest()
+    {
+        return $this->swooleRequest;
+    }
+
+    /**
+     * With swoole request
+     * @param \Swoole\Http\Request $request
+     * @return $this
+     */
+    public function withSwooleRequest(\Swoole\Http\Request $request)
+    {
+        $this->swooleRequest = $request;
+        return $this;
     }
 
     /**

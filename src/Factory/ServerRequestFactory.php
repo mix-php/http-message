@@ -45,23 +45,25 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
     /**
      * Create a new server request.
      *
-     * @param \Swoole\Http\Request $req
+     * @param \Swoole\Http\Request $requ
      * @return ServerRequestInterface
      */
-    public function createServerRequestFromSwoole(\Swoole\Http\Request $req): ServerRequestInterface
+    public function createServerRequestFromSwoole(\Swoole\Http\Request $requ): ServerRequestInterface
     {
-        list($scheme, $protocolVersion) = explode('/', $req->server['server_protocol']);
-        $method       = $req->server['request_method'] ?? '';
+        list($scheme, $protocolVersion) = explode('/', $requ->server['server_protocol']);
+        $method       = $requ->server['request_method'] ?? '';
         $scheme       = strtolower($scheme);
-        $host         = $req->header['host'] ?? '';
-        $requestUri   = $req->server['request_uri'] ?? '';
-        $queryString  = $req->server['query_string'] ?? '';
+        $host         = $requ->header['host'] ?? '';
+        $requestUri   = $requ->server['request_uri'] ?? '';
+        $queryString  = $requ->server['query_string'] ?? '';
         $uri          = new Uri($scheme . '://' . $host . $requestUri . ($queryString ? "?{$queryString}" : ''));
-        $serverParams = $req->server ?? [];
+        $serverParams = $requ->server ?? [];
 
+        /** @var ServerRequest $serverRequest */
         $serverRequest = $this->createServerRequest($method, $uri, $serverParams);
+        $serverRequest->withSwooleRequest($requ);
 
-        $headers = $req->header ?? [];
+        $headers = $requ->header ?? [];
         foreach ($headers as $name => $value) {
             $serverRequest->withHeader($name, $value);
         }
@@ -73,21 +75,21 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
             &&
             strpos($contentType, 'application/x-www-form-urlencoded') === false
         ) {
-            $content = $req->rawContent();
+            $content = $requ->rawContent();
         }
         $body = (new StreamFactory())->createStream($content);
         $serverRequest->withBody($body);
 
-        $cookieParams = $req->cookie ?? [];
+        $cookieParams = $requ->cookie ?? [];
         $serverRequest->withCookieParams($cookieParams);
 
-        $queryParams = $req->get ?? [];
+        $queryParams = $requ->get ?? [];
         $serverRequest->withQueryParams($queryParams);
 
         $uploadedFiles       = [];
         $uploadedFileFactory = new UploadedFileFactory;
         $streamFactory       = new StreamFactory();
-        foreach ($req->files ?? [] as $name => $file) {
+        foreach ($requ->files ?? [] as $name => $file) {
             // 注意：当httpServer的handle内开启协程时，handle方法会先于Callback执行完，
             // 这时临时文件会在还没处理完成就被删除，所以这里生成新文件，在UploadedFile析构时删除该文件
             $tmpfile = $file['tmp_name'] . '.mix';
@@ -102,7 +104,7 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
         }
         $serverRequest->withUploadedFiles($uploadedFiles);
 
-        $parsedBody = $req->post ?? [];
+        $parsedBody = $requ->post ?? [];
         $serverRequest->withParsedBody($parsedBody);
 
         return $serverRequest;
