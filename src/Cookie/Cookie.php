@@ -86,7 +86,7 @@ class Cookie
 
     /**
      * Get expire
-     * @return string
+     * @return int
      */
     public function getExpire()
     {
@@ -103,12 +103,34 @@ class Cookie
     }
 
     /**
+     * With the specified path
+     * @param string $path
+     * @return $this
+     */
+    public function withPath(string $path)
+    {
+        $this->path = $path;
+        return $this;
+    }
+
+    /**
      * Get domain
      * @return string
      */
     public function getDomain()
     {
         return $this->domain;
+    }
+
+    /**
+     * With the specified domain
+     * @param string $domain
+     * @return $this
+     */
+    public function withDomain(string $domain)
+    {
+        $this->domain = $domain;
+        return $this;
     }
 
     /**
@@ -121,12 +143,34 @@ class Cookie
     }
 
     /**
+     * With the specified secure
+     * @param bool $secure
+     * @return $this
+     */
+    public function withSecure(bool $secure)
+    {
+        $this->secure = $secure;
+        return $this;
+    }
+
+    /**
      * Get httpOnly
      * @return string
      */
     public function getHttpOnly()
     {
         return $this->name;
+    }
+
+    /**
+     * With the specified httpOnly
+     * @param bool $httpOnly
+     * @return $this
+     */
+    public function withHttpOnly(bool $httpOnly)
+    {
+        $this->httpOnly = $httpOnly;
+        return $this;
     }
 
 }
