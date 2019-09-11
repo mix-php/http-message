@@ -4,7 +4,6 @@ namespace Mix\Http\Message\Factory;
 
 use Mix\Http\Message\Request;
 use Mix\Http\Message\Stream\ContentStream;
-use Mix\Http\Message\Uri\Uri;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 
@@ -17,7 +16,7 @@ class RequestFactory implements RequestFactoryInterface
 {
 
     /**
-     *
+     * Create a new request.
      *
      * @param string $method The HTTP method associated with the request.
      * @param UriInterface|string $uri The URI associated with the request. If
@@ -28,7 +27,7 @@ class RequestFactory implements RequestFactoryInterface
      */
     public function createRequest(string $method, $uri): RequestInterface
     {
-        if (!is_string($uri)) {
+        if (is_string($uri)) {
             $uri = (new UriFactory())->createUri($uri);
         }
         return new Request($method, $uri);
@@ -48,9 +47,10 @@ class RequestFactory implements RequestFactoryInterface
         $host        = $req->header['host'] ?? '';
         $requestUri  = $req->server['request_uri'] ?? '';
         $queryString = $req->server['query_string'] ?? '';
-        $uri         = new Uri($scheme . '://' . $host . $requestUri . ($queryString ? "?{$queryString}" : ''));
+        $uri         = $scheme . '://' . $host . $requestUri . ($queryString ? "?{$queryString}" : '');
 
         $request = $this->createRequest($method, $uri);
+        $request->withRequestTarget($uri);
 
         $headers = $req->header ?? [];
         foreach ($headers as $name => $value) {

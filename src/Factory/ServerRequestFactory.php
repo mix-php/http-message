@@ -36,7 +36,7 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
      */
     public function createServerRequest(string $method, $uri, array $serverParams = []): ServerRequestInterface
     {
-        if (!is_string($uri)) {
+        if (is_string($uri)) {
             $uri = (new UriFactory())->createUri($uri);
         }
         return new ServerRequest($method, $uri, $serverParams);
@@ -56,12 +56,13 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
         $host         = $requ->header['host'] ?? '';
         $requestUri   = $requ->server['request_uri'] ?? '';
         $queryString  = $requ->server['query_string'] ?? '';
-        $uri          = new Uri($scheme . '://' . $host . $requestUri . ($queryString ? "?{$queryString}" : ''));
+        $uri          = $scheme . '://' . $host . $requestUri . ($queryString ? "?{$queryString}" : '');
         $serverParams = $requ->server ?? [];
 
         /** @var ServerRequest $serverRequest */
         $serverRequest = $this->createServerRequest($method, $uri, $serverParams);
         $serverRequest->withSwooleRequest($requ);
+        $serverRequest->withRequestTarget($uri);
 
         $headers = $requ->header ?? [];
         foreach ($headers as $name => $value) {
