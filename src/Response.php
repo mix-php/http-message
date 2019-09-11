@@ -181,9 +181,9 @@ class Response extends Message implements ResponseInterface
     }
 
     /**
-     * 发送
+     * 
      */
-    public function send()
+    public function end()
     {
         $headers = $this->getHeaders();
         foreach ($headers as $name => $value) {
