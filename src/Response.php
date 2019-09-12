@@ -181,7 +181,7 @@ class Response extends Message implements ResponseInterface
     }
 
     /**
-     * 
+     * 发送Http响应体，并结束请求处理
      */
     public function end()
     {
