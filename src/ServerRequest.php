@@ -387,7 +387,7 @@ class ServerRequest extends Request implements ServerRequestInterface
      * 获取JWT有效载荷
      * @return array
      */
-    public function getJwtPayload()
+    public function getJWTPayload()
     {
         return $this->jwtPayload;
     }
@@ -397,7 +397,7 @@ class ServerRequest extends Request implements ServerRequestInterface
      * @param array $jwtPayload
      * @return $this
      */
-    public function withJwtPayload(array $jwtPayload)
+    public function withJWTPayload(array $jwtPayload)
     {
         $this->jwtPayload = $jwtPayload;
         return $this;
