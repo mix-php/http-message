@@ -50,6 +50,7 @@ class RequestFactory implements RequestFactoryInterface
         $uri         = $scheme . '://' . $host . $requestUri . ($queryString ? "?{$queryString}" : '');
 
         $request = $this->createRequest($method, $uri);
+        $request->withProtocolVersion($protocolVersion);
         $request->withRequestTarget($uri);
 
         $headers = $req->header ?? [];

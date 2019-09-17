@@ -62,6 +62,7 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
         /** @var ServerRequest $serverRequest */
         $serverRequest = $this->createServerRequest($method, $uri, $serverParams);
         $serverRequest->withSwooleRequest($requ);
+        $serverRequest->withProtocolVersion($protocolVersion);
         $serverRequest->withRequestTarget($uri);
 
         $headers = $requ->header ?? [];
