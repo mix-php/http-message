@@ -138,7 +138,9 @@ class Response extends Message implements ResponseInterface
      */
     public function withCookies(array $cookies)
     {
-        $this->cookies = $cookies;
+        foreach ($cookies as $cookie) {
+            $this->withCookie($cookie);
+        }
         return $this;
     }
 
