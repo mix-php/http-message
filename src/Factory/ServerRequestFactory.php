@@ -70,13 +70,13 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
             $serverRequest->withHeader($name, $value);
         }
 
-        $contentType = $serverRequest->getHeaderLine('content-type');
-        $content     = '';
-        if (
-            strpos($contentType, 'multipart/form-data') === false
-            &&
-            strpos($contentType, 'application/x-www-form-urlencoded') === false
-        ) {
+        $contentType      = $serverRequest->getHeaderLine('content-type');
+        $isFormUrlencoded = strpos($contentType, 'application/x-www-form-urlencoded') === false ? false : true;
+        $isFormJson       = strpos($contentType, 'application/json') === false ? false : true;
+        $isFormData       = strpos($contentType, 'multipart/form-data') === false ? false : true;
+
+        $content = '';
+        if (!$isFormData) { // multipart/form-data 类型不放入body，数据太大，swoole 会解析为 files + post
             $content = $requ->rawContent();
         }
         $body = (new StreamFactory())->createStream($content);
@@ -106,7 +106,11 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
         }
         $serverRequest->withUploadedFiles($uploadedFiles);
 
-        $parsedBody = $requ->post ?? [];
+        $parsedBody = $requ->post ?? []; // swoole 本身能解析 application/x-www-form-urlencoded multipart/form-data 全部的 method
+        if ($isFormJson) {
+            $json       = json_decode($requ->rawContent(), true, 512);
+            $parsedBody = is_null($json) ? [] : $json;
+        }
         $serverRequest->withParsedBody($parsedBody);
 
         return $serverRequest;
