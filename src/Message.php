@@ -16,17 +16,17 @@ class Message implements MessageInterface
     /**
      * @var string
      */
-    public $protocolVersion = '';
+    protected $protocolVersion = '';
 
     /**
      * @var string[][]
      */
-    public $headers = [];
+    protected $headers = [];
 
     /**
      * @var StreamInterface
      */
-    public $body;
+    protected $body;
 
     /**
      * Retrieves the HTTP protocol version as a string.

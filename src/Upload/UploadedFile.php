@@ -17,27 +17,27 @@ class UploadedFile implements UploadedFileInterface
     /**
      * @var StreamInterface
      */
-    public $stream;
+    protected $stream;
 
     /**
      * @var int
      */
-    public $size;
+    protected $size;
 
     /**
      * @var int
      */
-    public $error;
+    protected $error;
 
     /**
      * @var string
      */
-    public $clientFilename;
+    protected $clientFilename;
 
     /**
      * @var string
      */
-    public $clientMediaType;
+    protected $clientMediaType;
 
     /**
      * UploadedFile constructor.

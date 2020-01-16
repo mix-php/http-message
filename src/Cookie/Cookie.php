@@ -13,37 +13,37 @@ class Cookie
     /**
      * @var string
      */
-    public $name = '';
+    protected $name = '';
 
     /**
      * @var string
      */
-    public $value = '';
+    protected $value = '';
 
     /**
      * @var int
      */
-    public $expire = 0;
+    protected $expire = 0;
 
     /**
      * @var string
      */
-    public $path = '/';
+    protected $path = '/';
 
     /**
      * @var string
      */
-    public $domain = '';
+    protected $domain = '';
 
     /**
      * @var bool
      */
-    public $secure = false;
+    protected $secure = false;
 
     /**
      * @var bool
      */
-    public $httpOnly = false;
+    protected $httpOnly = false;
 
     /**
      * Cookie constructor.
@@ -159,7 +159,7 @@ class Cookie
      */
     public function getHttpOnly()
     {
-        return $this->name;
+        return $this->httpOnly;
     }
 
     /**

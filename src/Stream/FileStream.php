@@ -16,12 +16,12 @@ class FileStream implements StreamInterface
     /**
      * @var string
      */
-    public $filename = '';
+    protected $filename = '';
 
     /**
      * @var int
      */
-    public $size = 0;
+    protected $size = 0;
 
     /**
      * FileStream constructor.

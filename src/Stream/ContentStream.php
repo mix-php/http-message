@@ -16,12 +16,12 @@ class ContentStream implements StreamInterface
     /**
      * @var string
      */
-    public $contents = '';
+    protected $contents = '';
 
     /**
      * @var int
      */
-    public $size = 0;
+    protected $size = 0;
 
     /**
      * ContentStream constructor.

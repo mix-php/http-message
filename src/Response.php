@@ -16,22 +16,22 @@ class Response extends Message implements ResponseInterface
     /**
      * @var \Swoole\Http\Response
      */
-    public $swooleResponse;
+    protected $swooleResponse;
 
     /**
      * @var int
      */
-    public $statusCode = 200;
+    protected $statusCode = 200;
 
     /**
      * @var string
      */
-    public $reasonPhrase = '';
+    protected $reasonPhrase = '';
 
     /**
      * @var Cookie[]
      */
-    public $cookies = [];
+    protected $cookies = [];
 
     /**
      * Response constructor.

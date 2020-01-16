@@ -17,17 +17,17 @@ class Request extends Message implements RequestInterface
     /**
      * @var string
      */
-    public $requestTarget = '/';
+    protected $requestTarget = '/';
 
     /**
      * @var string
      */
-    public $method = '';
+    protected $method = '';
 
     /**
      * @var UriInterface
      */
-    public $uri;
+    protected $uri;
 
     /**
      * Request constructor.
