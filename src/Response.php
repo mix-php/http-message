@@ -262,9 +262,9 @@ class Response extends Message implements ResponseInterface
     /**
      * 发送文件
      * @param string $filename
-     * @return bool
+     * @return bool|null
      */
-    public function sendFile(string $filename): bool
+    public function sendFile(string $filename): ?bool
     {
         if ($this->isSwoole()) {
             return $this->swooleSendFile($filename);
@@ -404,9 +404,9 @@ class Response extends Message implements ResponseInterface
 
     /**
      * @param string $filename
-     * @return bool
+     * @return bool|null
      */
-    protected function workerManSendFile(string $filename): bool
+    protected function workerManSendFile(string $filename): ?bool
     {
         $headers = $this->getHeaders();
 
